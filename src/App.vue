@@ -1,18 +1,28 @@
 <template>
   <div id="app">
-    <store/>
+    
+   <navbar/>
 
+   <router-view>
+
+     </router-view>
+    <!-- <store/> -->
+    
+    
+   
   </div>
 </template>
 
 <script>
 
-import Store from "./components/Store";
+// import Store from "./components/Store";
+import  Navbar  from "./components/Store/components/Navbar";
+
 export default {
   name: 'App',
   components: {
-
-    Store
+    // Store,
+    Navbar
   },
 
   

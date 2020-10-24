@@ -2,7 +2,7 @@
     <div  class="container">
         <div class="search">
             
-          search your sushi <input type="text" v-model="searchText" placeholder="philadelfia" class="input">
+          шукай улюблені страви за назвою <input type="text" v-model="searchText" placeholder="philadelfia" class="input">
        
         </div>
         <div class="cart" v-if="productsInCart">
@@ -66,6 +66,7 @@
     margin: 10px;
     color:darksalmon;
     font-size:25px;
+    
     
 }
 .bntClean{

@@ -23,8 +23,9 @@
             <hr>
             Контролювати калорійність:
             <div>
-                <b-field label="допустимий максимум калорій" > 
-            <b-slider v-model="calories" type="is-warning" :tooltip-type="sliderType"   :min="0" :max="2000" :step="50" ></b-slider>
+                <b-field label=" макс. калорій на одну страву" > 
+                    
+            <b-slider v-model="calories" type="is-warning" :tooltip-type="sliderType"  :min="0" :max="2000" :step="50" ></b-slider>
         </b-field>
                 
             </div>
@@ -122,11 +123,20 @@
     width: 300px;
     height: 500px;
     max-width: 300px;
-    background-color:rgb(241, 151, 87);
+    background-color:rgba(241, 151, 87, 0.515);
     border-radius: 20px;
     padding: 19px;
-    margin-left: 1px;
+    float: left;
+    margin-left: 7px;
     margin-right: 10px;
+    position: sticky;
+    top: 3em;
+  
+    z-index: 99999;
+    
+ 
+
+
     
 }
 .container div{

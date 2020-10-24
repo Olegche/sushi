@@ -1,8 +1,12 @@
 <template>
   <div>
-    <navbar/>
+    
+    <!-- <navbar/> -->
+     
+
     <div class="logo">
       <p class="phone">
+
         <b>one call and</b>
 
         ...have your tasty right now <a> +380 (67) 95 87 995</a>
@@ -13,13 +17,52 @@
       <carousel />
     </div>
     
+      
+    
     <header-section
       :products-in-cart="productsInCart"
       @title-filter="setTextFilterData"
       @clear-cart="clearCart"
       @remove-last-one="removeLastProduct"
     />
+        <div class="mainDivCalculator">
+        <button class="btnCalculatorShow" @click="show">?</button>
+        
+      <div class="cal" v-if="showCalculator">
+        <label>Добова норма калорій</label>
+        <br>
+        <label
+          ><input  v-model="sex" type="radio" name="sex" value="man"  /> чоловік </label
+        >
+        <label
+          ><input v-model="sex" type="radio" name="sex" value="wooman" /> жінка </label
+        >
+        <div>
+            вік:
+        <b-slider v-model="age" type="is-warning" :tooltip-type="sliderType"   :min="13" :max="80" :step="1" ></b-slider>
+
+        </div>
+         <div>
+            ріст:
+        <b-slider v-model="height" type="is-warning" :tooltip-type="sliderType"   :min="140" :max="210" :step="1" ></b-slider>
+        </div>
+        <div>
+            вага:
+        <b-slider v-model="weight" type="is-warning" :tooltip-type="sliderType"   :min="40" :max="150" :step="1" ></b-slider>
+        </div>
+        <div>
+            <button class="btnCalculatorResult" @click="checkRes">порахувати</button>
+        </div>
+        <div v-if="resultIs && resultIs > 0">
+            {{resultIs}} ккл на день
+        </div>
+        <div>
+            <button class="btnCalculatorHide" @click="hide">x</button>
+        </div>
+      </div>
+    </div>
     <div class="container">
+      
       <filter-section
         
         :categories-list="categoriesList"
@@ -29,7 +72,11 @@
         :products="filteredProducts"
         @add-to-cart="addProductToCart"
       />
+    
     </div>
+
+    
+    
   </div>
 </template>
 
@@ -38,7 +85,7 @@ import ProductList from "./components/ProductList";
 import HeaderSection from "./components/HeaderSection";
 import FilterSection from "./components/FilterSection";
 import Carousel from "./components/Carousel";
-import  Navbar  from "./components/Navbar";
+// import  Navbar  from "./components/Navbar";
 
 export default {
   name: "Store",
@@ -48,7 +95,29 @@ export default {
     HeaderSection,
     FilterSection,
     Carousel,
-    Navbar
+    // Navbar
+  },
+  props: {
+            sex: {
+            type: [String,Boolean],
+            default: "man"
+            },
+            age: {
+            type: Number,
+            default: null
+            },
+             weight: {
+            type: Number,
+            default: null
+            },
+            height: {
+            type: Number,
+            default: null
+            },
+            resultIs: {
+            type: Number,
+            default: null
+            },
   },
 
   data() {
@@ -79,6 +148,8 @@ export default {
           title: "Гункани",
         },
       ],
+
+      showCalculator: false,
 
       // caloriesList: [
       //   {
@@ -423,6 +494,25 @@ export default {
     removeLastProduct() {
       this.productsInCart += -1;
     },
+    checkRes() {
+          if(this.sex === "man") {
+
+       this.resultIs = Math.round((((10 * this.weight) + 6.25 * this.height) - ((5 * this.age) + 5)) * 1.3)
+          }
+          else if (this.sex === "wooman") {
+                     this.resultIs = Math.round((((10 * this.weight) + 6.25 * this.height) - ((5 * this.age)) - 161) * 1.3)
+
+          }
+          else
+          this.resultIs = '2000'
+          
+      },
+      show() {
+          this.showCalculator = true
+      },
+      hide() {
+          this.showCalculator = false
+      }
   },
 };
 </script>
@@ -440,6 +530,57 @@ export default {
 .phone {
   text-align: right;
   margin-right: 17px;
+}
+.mainDivCalculator{
+    display: block;
+    text-align: center;
+    width: 162px;
+    height: 100px;
+    max-width: 200px;
+    float: right;
+    border-radius: 20px;
+    padding: 9px;
+    bottom: 300px;
+    position: sticky;
+    top: 5em;
+    min-height: 30em;
+    
+    
+   
+   
+    
+}
+.btnCalculatorShow {
+   background-color: rgb(168, 240, 97);
+   border-radius: 20px;
+   border-width: 0.1px;
+   width: 30px;
+   height: 30px;
+   font-size: 20px;
+   font-family:sans-serif;
+   color:rgb(59, 114, 198);
+   
+  
+   
+}
+.btnCalculatorResult {
+   background-color: rgba(233, 150, 122, 0.824);
+   border-radius: 7px;
+   border-width: 0.1px;
+   font-family:sans-serif;
+   font-size: 20px;
+   color: white;
+   margin-bottom: 7px
+}
+.btnCalculatorHide{
+ background-color: rgb(245, 56, 56);
+   border-radius: 20px;
+   border-width: 0.1px;
+   width: 30px;
+   height: 30px;
+   font-size: 20px;
+   font-family:sans-serif;
+   color:rgb(255, 255, 255)
 }
 
 

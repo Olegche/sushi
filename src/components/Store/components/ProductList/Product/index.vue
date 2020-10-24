@@ -41,7 +41,7 @@ export default {
     },
     category: {
       type: String,
-      default: "space shuttle",
+      default: "new",
     },
     isVegan: {
     type: Boolean,

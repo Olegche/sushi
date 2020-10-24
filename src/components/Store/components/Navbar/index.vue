@@ -9,19 +9,23 @@
             </b-navbar-item>
         </template>
         <template slot="start">
-            <b-navbar-item href="#">
+            <b-navbar-item tag="router-link" :to="{ path: '/' }">
                   Головна
             </b-navbar-item>
-            <b-navbar-item href="#">
+            <b-navbar-item tag="router-link" :to="{ path: '/delivery' }">
                Доставка
             </b-navbar-item>
-            <b-navbar-dropdown label="детальна інформація">
-                <b-navbar-item href="#">
+            <b-navbar-item tag="router-link" :to="{ path: '/cart' }">
+                 Корзина
+            </b-navbar-item>
+            <b-navbar-dropdown label="Детальна інформація">
+                <b-navbar-item tag="router-link" :to="{ path: '/about' }">
                     Ми
                 </b-navbar-item>
-                <b-navbar-item href="#">
+                <b-navbar-item tag="router-link" :to="{ path: '/contact' }">
                    Контакти
                 </b-navbar-item>
+                
             </b-navbar-dropdown>
         </template>
 

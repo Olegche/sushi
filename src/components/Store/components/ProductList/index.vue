@@ -3,8 +3,9 @@
         <div v-if="!products">
             No items
         </div>
-        <div v-if="products" class="container">
-            <product v-for="item in products"  :key="item.id"
+         
+        <div v-if="products" >
+            <product class="tile" v-for="item in products"  :key="item.id"
             :img="item.img"
             :title="item.title"
             :price="item.price"
@@ -13,7 +14,8 @@
             :isVegan="item.isVegan"
             @add-to-cart='$emit("add-to-cart")'
             />
-        </div>
+            </div>
+       
     </div>
 </template>
 
