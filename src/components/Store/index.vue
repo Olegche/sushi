@@ -22,6 +22,11 @@
       @clear-cart="clearCart"
       @remove-last-one="removeLastProduct"
     />
+    <div class="sortDiv">
+     
+     <b-button @click="sortByMinPrice" type="is-success is-light"> спочатку дешевші </b-button>
+     <b-button @click="sortByMaxPrice" type="is-success is-light"> спочатку дорожчі </b-button>
+    </div>
         <div class="mainDivCalculator">
         <button class="btnCalculatorShow" @click="show">?</button>
         
@@ -70,8 +75,12 @@
         :products="filteredProducts"
         @add-to-cart="addProductToCart"
       />
+
+
+     
     
     </div>
+    
 
     
     
@@ -448,6 +457,8 @@ export default {
 
       );
     },
+
+    
     isFilterEmpty() {
       return (
         !this.filter.textFilter &&
@@ -504,7 +515,15 @@ export default {
       },
       hide() {
           this.showCalculator = false
-      }
+      },
+      sortByMinPrice() {
+   return this.myProducts.sort((a,b)=> a.price- b.price)
+  
+},
+sortByMaxPrice() {
+   return this.myProducts.sort((a,b)=> b.price- a.price)
+  
+}
   },
 };
 </script>
@@ -576,6 +595,17 @@ export default {
    font-size: 20px;
    font-family:sans-serif;
    color:rgb(255, 255, 255)
+}
+.sortDiv{
+  text-align: center;
+  margin: 1px;
+
+}
+
+.sortDiv button{
+  
+  margin-left: 20px;
+
 }
 
 
