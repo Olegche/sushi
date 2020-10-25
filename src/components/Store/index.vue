@@ -422,6 +422,8 @@ export default {
     //   arr.sort();
     //   return arr;
     // },
+
+
     filteredProducts() {
       if (this.isFilterEmpty) return this.myProducts;
 
