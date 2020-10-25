@@ -22,10 +22,17 @@
         <div>
             <hr>
             Контролювати калорійність:
+
+            <div>
+                <b-field label=" мін. калорій на одну страву" > 
+                    
+            <b-slider v-model="minCalories" type="is-success" :tooltip-type="sliderType"  :min="0" :max="2000" :step="50" ></b-slider>
+        </b-field>
+        </div>
             <div>
                 <b-field label=" макс. калорій на одну страву" > 
                     
-            <b-slider v-model="calories" type="is-warning" :tooltip-type="sliderType"  :min="0" :max="2000" :step="50" ></b-slider>
+            <b-slider v-model="maxCalories" type="is-warning" :tooltip-type="sliderType"  :min="0" :max="2000" :step="50" ></b-slider>
         </b-field>
                 
             </div>
@@ -46,8 +53,16 @@
             </div>
             <div class="field">
             <b-checkbox  v-model="isVegan"  size="is-medium" type="is-success">I am vegan!</b-checkbox>
+           
+            <div>
+                <br>
+             <b-button  @click="cleanFilter" type="is-danger" outlined>очистити фільтри </b-button>
+
+            </div>
         </div>
+           
         </div>
+    
          </div>
     </div>
 </template>
@@ -56,10 +71,7 @@
     export default {
         name:'FilterSection',
         props: {
-            caloriesList:{
-                type:Array,
-                default:()=>[]
-            },
+           
             categoriesList: {
                 type: Array,
                 default: ()=>[]
@@ -70,7 +82,8 @@
             return {
                 minPrice: null,
                 maxPrice:null,
-                calories:null,
+                maxCalories:null,
+                minCalories:null,
                 category: null,
                 isVegan: null
 
@@ -79,9 +92,9 @@
 
         computed: {
             sliderType(){
-            if (this.calories <=2000 && this.calories > 1000){
+            if ((this.maxCalories <=2000 && this.maxCalories > 1000)|| (this.minCalories <=2000 && this.minCalories > 1000)){
                 return "is-danger";
-            } else if (this.calories >= 500){
+            } else if ((this.maxCalories >= 500) || (this.minCalories >= 500)   ){
                 return "is-warning";
             }
             return "is-success";
@@ -99,9 +112,14 @@
                     maxPrice: newValue || null
                 })
             },
-            calories(newValue) {
+            maxCalories(newValue) {
                 this.$emit('filter-changed',{
-                    calories: newValue || null
+                    maxCalories: newValue || null
+                })
+            },
+            minCalories(newValue) {
+                this.$emit('filter-changed',{
+                    minCalories: newValue || null
                 })
             },
             category(newValue) {
@@ -113,6 +131,18 @@
                this.$emit('filter-changed',{
                     isVegan: newValue || null
                 })
+            },
+            
+        },
+
+        methods: {
+            cleanFilter() {
+                this.minPrice = null,
+                this.maxPrice = null,
+                this.maxCalories = null,
+                this.minCalories = null,
+                this.category = null,
+                this.isVegan = null
             }
         },
     }
@@ -121,7 +151,7 @@
 <style lang="css" scoped>
 .container{
     width: 300px;
-    height: 500px;
+    height: 590px;
     max-width: 300px;
     background-color:rgba(241, 151, 87, 0.515);
     border-radius: 20px;
@@ -131,7 +161,6 @@
     margin-right: 10px;
     position: sticky;
     top: 3em;
-  
     z-index: 99999;
     
  

@@ -2,11 +2,13 @@
     <div  class="container">
         <div class="search">
             
-          шукай улюблені страви за назвою <input type="text" v-model="searchText" placeholder="philadelfia" class="input">
+          шукай улюблені страви за назвою <input  type="text" v-model="searchText" placeholder="philadelfia" class="input">
+          
        
         </div>
-        <div class="cart" v-if="productsInCart">
-            Products in cart: {{productsInCart}} <button @click="$emit('remove-last-one')" class="btnRemove">remove last one</button> <button @click="$emit('clear-cart')" class="bntClean">clean  cart</button>
+        <div  class="cart" v-if="productsInCart">
+            Products in cart: {{productsInCart}}
+             <button  @click="$emit('remove-last-one')" class="btnRemove">remove last one</button> <button @click="$emit('clear-cart')" class="bntClean">clean  cart</button>
         </div>
     </div>
 </template>
@@ -68,6 +70,8 @@
     font-size:25px;
     
     
+    
+    
 }
 .bntClean{
     border-radius: 7px;
@@ -84,6 +88,7 @@
     
     font-size: 20px;
     border-width: 0.1px;
+    
     
 
 }

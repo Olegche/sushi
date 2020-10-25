@@ -14,7 +14,7 @@
     <div class="text">
       {{ category }}
     </div>
-    <button @click="$emit('add-to-cart')" class="btnAdd">add to cart</button>
+    <button @click="$emit('add-to-cart')" class="btnAdd">в корзину</button>
   </div>
 </template>
 

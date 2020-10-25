@@ -5,6 +5,7 @@ import Store from "./components/Store";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Delivery from "./pages/Delivery";
+import Cart from "./pages/Cart";
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,9 @@ const routes = [
     },
     {
         path: "/delivery", component : Delivery
+    },
+    {
+        path: "/cart", component : Cart
     },
 ]
 

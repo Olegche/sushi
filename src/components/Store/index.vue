@@ -1,15 +1,12 @@
 <template>
   <div>
     
-    <!-- <navbar/> -->
-     
-
     <div class="logo">
       <p class="phone">
 
         <b>one call and</b>
 
-        ...have your tasty right now <a> +380 (67) 95 87 995</a>
+        ...have your tasty right now <a href="tel:+380679587995">0679587995</a>
       </p>
       <img src="@/assets/images/sushi2.gif" alt="logo" class="imglog" />
     </div>
@@ -67,6 +64,7 @@
         
         :categories-list="categoriesList"
         @filter-changed="setFilter"
+        
       />
       <product-list
         :products="filteredProducts"
@@ -85,7 +83,6 @@ import ProductList from "./components/ProductList";
 import HeaderSection from "./components/HeaderSection";
 import FilterSection from "./components/FilterSection";
 import Carousel from "./components/Carousel";
-// import  Navbar  from "./components/Navbar";
 
 export default {
   name: "Store",
@@ -151,25 +148,13 @@ export default {
 
       showCalculator: false,
 
-      // caloriesList: [
-      //   {
-      //     id: "",
-      //     calories: 'довільні калорії',
-      //   },
-      //   {
-      //     id: 60,
-      //     calories: 60,
-      //   },
-      //   {
-      //     id: 99,
-      //     calories: 99,
-      //   },
-      // ],
+      
       filter: {
-        textFilter: null, //Щоб була реактивність
+        textFilter: null, 
         minPrice: null,
         maxPrice: null,
-        calories: null,
+        minCalories: null,
+        maxCalories: null,
         category: null,
         isVegan: null
       },
@@ -448,8 +433,12 @@ export default {
             item.price >= this.filter.minPrice) &&
           (this.filter.maxPrice === null ||
             item.price <= this.filter.maxPrice) &&
-          (this.filter.calories=== null ||
-            item.calories <= this.filter.calories) &&
+          (this.filter.maxCalories=== null ||
+            item.calories <= this.filter.maxCalories) &&
+
+            (this.filter.minCalories=== null ||
+            item.calories >= this.filter.minCalories) &&
+
           (this.filter.category === null ||
             item.category === this.filter.category) &&
             (this.filter.isVegan === null ||
@@ -462,7 +451,8 @@ export default {
         !this.filter.textFilter &&
         this.filter.minPrice === null &&
         this.filter.maxPrice === null &&
-        this.filter.calories === null &&
+        this.filter.maxCalories === null &&
+        this.filter.minCalories === null &&
         this.filter.category === null &&
         this.filter.isVegan === null
       );
@@ -551,17 +541,20 @@ export default {
     
 }
 .btnCalculatorShow {
-   background-color: rgb(168, 240, 97);
+   background-color: rgb(124, 245, 99);
    border-radius: 20px;
    border-width: 0.1px;
    width: 30px;
    height: 30px;
    font-size: 20px;
    font-family:sans-serif;
-   color:rgb(59, 114, 198);
-   
-  
-   
+   color:rgb(32, 18, 230);
+
+}
+.btnCalculatorShow:hover {
+ 
+ width: 35px;
+ height: 35px;;
 }
 .btnCalculatorResult {
    background-color: rgba(233, 150, 122, 0.824);

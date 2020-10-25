@@ -1,13 +1,11 @@
 <template>
     <div>
-Contact
-<a href="tel:+380679587995">0679587995</a>
+Cart sushi
     </div>
 </template>
 
 <script>
     export default {
-        name: 'Contact'
         
     }
 </script>
