@@ -288,6 +288,8 @@ const store = new Vuex.Store (
 
             getMyStoreCart: (state) => state.MyStoreCart,
 
+            myProducts: (state) => state.myStoreProducts
+
            
         }
 

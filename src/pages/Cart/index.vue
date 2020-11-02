@@ -1,7 +1,7 @@
 <template>
   <div>
-    Cart sushi
-    <span> my store cart: {{ getMyStoreCartLength }} </span>
+   
+    <span> в кошику  {{ getMyStoreCartLength }} </span>
     <span class="container">
       
      <table v-if="getMyStoreCartLength > 0" class="table">
@@ -31,6 +31,7 @@
              <td>
                  {{product.price}}
              </td>
+             
              <td>
                  <button @click="deleteFromCart(index)">delete</button>
              </td>
@@ -80,14 +81,18 @@ export default {
         }
          res = res.reduce((a,b) => a + b)
         return res
-    }
+    },
+
+    
 
   
   },
 
+  
+
   methods: {
 
-      ...mapActions(['removeFromCart']),
+      ...mapActions(['removeFromCart','addProductToMyStoreCart']),
 
       deleteFromCart(index) {
 
