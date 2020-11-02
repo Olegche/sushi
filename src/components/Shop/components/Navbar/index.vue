@@ -29,7 +29,9 @@
                 
             </b-navbar-dropdown>
 
-<div class="wrapper" v-if="signUpBtn">
+<div class="wrapper" v-if="signUpBtn" >
+    <button class="btnCloseForm" @click="closeLoginForm">x</button>
+
  <div class="signUp" >
                  <b-field label="Name" :label-position="labelPosition">
             <b-input value="Kevin Garvey"></b-input>
@@ -66,6 +68,7 @@
 </div>
 
 <div class="wrapper" v-if="login" >
+    <button class="btnCloseForm" @click="closeLoginForm">x</button>
 <div class="signUp" >
     <b-field label="Username"
             :type="{ 'is-danger': hasError }"
@@ -80,6 +83,8 @@
                 { 'Password must have at least 8 characters': hasError }
             ]">
             <b-input value="123" type="password" maxlength="30"></b-input>
+           
+        
             <b-button type="is-success">Login</b-button>
         </b-field>
 
@@ -127,6 +132,11 @@
                 this.signUpBtn = false
                 this.login = true
 
+            },
+            closeLoginForm() {
+                this.signUpBtn = false
+                this.login = false
+
             }
         },
         
@@ -150,6 +160,15 @@
     border-width: medium;
     padding: 20px;
 }
+
+.signUp b-button{
+    
+    margin: 11px;
+    
+    
+    
+    
+}
 .wrapper {
     position: absolute;
     margin-left: 30%;
@@ -163,7 +182,18 @@
     border-width: medium;
     width: 500px;
     height: 590px;
-    background-color: rgba(0, 0, 205, 0.283);
+    background-color: rgba(199, 199, 202, 0.283);
+}
+.btnCloseForm {
+    width: 31px;
+    height: 31px;
+    font-size: 20px;
+    float: right;
+    border-radius: 3px;
+    background-color:rgb(243, 57, 57);
+    color: white;
+    border-width: 0px;
+    
 }
 
 </style>

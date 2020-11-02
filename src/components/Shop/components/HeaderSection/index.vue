@@ -6,14 +6,17 @@
           
        
         </div>
-        <div  class="cart" v-if="productsInCart">
-            Products in cart: {{productsInCart}}
-             <button  @click="$emit('remove-last-one')" class="btnRemove">remove last one</button> <button @click="$emit('clear-cart')" class="bntClean">clean  cart</button>
-        </div>
+        
+        <span>
+            my store cart: {{ getMyStoreCartLength }}
+        </span>
     </div>
 </template>
 
 <script>
+
+import { mapGetters} from 'vuex'
+ 
     export default {
         name:'HeaderSection',
 
@@ -22,6 +25,10 @@
                 type: Number,
                 default: null
             },
+        },
+
+        computed: {
+            ...mapGetters(['getMyStoreCartLength']),
         },
 
         data() {
@@ -49,6 +56,7 @@
     display: flex;
     justify-content: space-between;
     
+    
 
 }
 
@@ -56,6 +64,7 @@
    
     font-size: 20px;
     margin: 10px;
+
 }
 .input {
     border-radius: 10px;

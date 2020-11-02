@@ -7,22 +7,29 @@
       </b>
     </div>
     <div class="text">{{ price }} грн.</div>
-    <div class="text">{{ priceDol }} $</div>
+    
     <div class="text">
       {{ `${calories} ккл` }}
     </div>
     <div class="text">
       {{ category }}
     </div>
-    <button @click="$emit('add-to-cart')" class="btnAdd">в корзину</button>
+    <button @click="onAdd"  class="btnAdd">в корзину</button>
+    
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: "Product",
 
   props: {
+    id:{
+      type: [String,Number],
+      default: null,
+    },
     img: {
       type: String,
       default: require("@/assets/images/smile.jpg"),
@@ -49,11 +56,28 @@ export default {
     }
   },
 
-  computed: {
-    priceDol() {
-      return (this.price / 28).toFixed(1);
-    },
+  methods: {
+    ...mapActions(['addToMyStoreCart']), 
+
+    onAdd() {
+
+      const { title, price, img,calories,id} = this
+      this.addToMyStoreCart(
+        {
+          title,
+          price,
+          img, 
+          calories,
+          id
+          
+        }
+      )
+    }
+      
+    
   },
+
+  
 };
 </script>
 
@@ -79,9 +103,10 @@ export default {
   background-color: limegreen;
   color: mintcream;
   font-size: 17px;
-  border-width: 0.1px;
+  border-width: 0px;
   cursor: pointer;
   animation: pulse 2s infinite;
+  margin-bottom: 19px;
 }
 .btnAdd:hover {
   animation: none;

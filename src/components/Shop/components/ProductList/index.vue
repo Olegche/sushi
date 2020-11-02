@@ -6,12 +6,14 @@
          
         <div v-if="products" >
             <product class="tile" v-for="item in products"  :key="item.id"
+            :id="item.id"
             :img="item.img"
             :title="item.title"
             :price="item.price"
             :calories="item.calories"
             :category="item.category"
             :isVegan="item.isVegan"
+            
             @add-to-cart='$emit("add-to-cart")'
             />
             </div>

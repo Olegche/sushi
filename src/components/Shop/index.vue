@@ -94,7 +94,7 @@ import FilterSection from "./components/FilterSection";
 import Carousel from "./components/Carousel";
 
 export default {
-  name: "Store",
+  name: "Shop",
 
   components: {
     ProductList,
@@ -562,14 +562,14 @@ sortByMaxPrice() {
     
 }
 .btnCalculatorShow {
-   background-color: rgb(124, 245, 99);
+   background-color: limegreen;
    border-radius: 20px;
-   border-width: 0.1px;
+   border-width: 0px;
    width: 30px;
    height: 30px;
    font-size: 20px;
    font-family:sans-serif;
-   color:rgb(32, 18, 230);
+   color:rgb(255, 255, 255);
 
 }
 .btnCalculatorShow:hover {
@@ -589,7 +589,7 @@ sortByMaxPrice() {
 .btnCalculatorHide{
  background-color: rgb(245, 56, 56);
    border-radius: 20px;
-   border-width: 0.1px;
+   border-width: 0px;
    width: 30px;
    height: 30px;
    font-size: 20px;

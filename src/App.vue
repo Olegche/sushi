@@ -16,7 +16,7 @@
 <script>
 
 // import Store from "./components/Store";
-import  Navbar  from "./components/Store/components/Navbar";
+import  Navbar  from "./components/Shop/components/Navbar";
 
 export default {
   name: 'App',
