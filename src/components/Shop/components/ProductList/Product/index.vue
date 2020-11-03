@@ -13,6 +13,7 @@
     </div>
     <div class="text">
       {{ category }}
+      
     </div>
     <button @click="onAdd"  class="btnAdd">в корзину</button>
     
@@ -27,7 +28,7 @@ export default {
 
   props: {
     id:{
-      type: [String,Number],
+      type: [String, Number],
       default: null,
     },
     img: {
@@ -55,27 +56,19 @@ export default {
     default: null
     }
   },
+  
 
   methods: {
     ...mapActions(['addToMyStoreCart']), 
 
     onAdd() {
-
-      const { title, price, img,calories,id} = this
-      this.addToMyStoreCart(
-        {
-          title,
-          price,
-          img, 
-          calories,
-          id
-          
-        }
-      )
+      this.addToMyStoreCart(this.id)
     }
       
     
   },
+
+ 
 
   
 };
@@ -89,7 +82,11 @@ export default {
   background-color: rgb(255, 255, 255);
   margin: 10px;
   text-align: center;
+   box-shadow: 0 0 10px rgba(150, 126, 126, 0.5); 
+   border-radius: 10px
+  
 }
+
 .img {
   max-width: 200px;
   height: 200px;
