@@ -252,8 +252,15 @@ const store = new Vuex.Store({
 
     removeFromCart(state, index) {
       state.MyStoreCart.splice(index, 1)
-    }
+    },
 
+    decrementCart(state, id) {
+      const product = state.MyStoreCart.find((item) => item.id === id)
+      product.count--
+      if(product.count < 1)
+      product.count = 1
+  
+    }
 
   },
 
@@ -269,11 +276,18 @@ const store = new Vuex.Store({
     }, index) {
       commit('removeFromCart', index)
     },
+
+    decrementCart( {commit}, id) {
+      commit('decrementCart', id)
+    }
+    
   },
+
+
 
   getters: {
     getMyStoreCartLength: (state) =>
-    state.MyStoreCart.reduce((sum, item) => sum + item.count, 0),
+      state.MyStoreCart.reduce((sum, item) => sum + item.count, 0),
 
     getMyStoreCart: (state) => {
       const arr = []

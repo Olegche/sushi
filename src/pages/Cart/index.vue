@@ -24,11 +24,11 @@
                  {{index + 1}}
              </td>
              <td>
-                 <button>
+                 <button @click="addProduct(product.id)">
                      +
                  </button>
                  {{product.count}}
-                 <button>
+                 <button @click="minusProduct(product.id)">
                      -
                  </button>
              </td>
@@ -128,11 +128,19 @@ export default {
 
   methods: {
 
-      ...mapActions(['removeFromCart','addProductToMyStoreCart']),
+      ...mapActions(['removeFromCart','addToMyStoreCart', 'decrementCart']),
 
       deleteFromCart(index) {
 
          this.removeFromCart(index)
+      },
+
+      addProduct(id){
+          this.addToMyStoreCart(id)
+      },
+
+      minusProduct(id) {
+          this.decrementCart(id)
       }
 
    
