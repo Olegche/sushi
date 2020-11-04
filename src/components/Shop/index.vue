@@ -35,36 +35,18 @@
         </label>
         <div>
           вік:
-          <b-slider
-            v-model="age"
-            type="is-warning"
-            :tooltip-type="sliderType"
-            :min="13"
-            :max="80"
-            :step="1"
-          ></b-slider>
+<b-slider v-model="age" type="is-warning"  :min="13" :max="80" :step="1" ></b-slider>
+
         </div>
         <div>
           ріст:
-          <b-slider
-            v-model="height"
-            type="is-warning"
-            :tooltip-type="sliderType"
-            :min="140"
-            :max="210"
-            :step="1"
-          ></b-slider>
+          <b-slider v-model="height" type="is-warning"   :min="140" :max="210" :step="1" ></b-slider>
+
         </div>
         <div>
           вага:
-          <b-slider
-            v-model="weight"
-            type="is-warning"
-            :tooltip-type="sliderType"
-            :min="40"
-            :max="150"
-            :step="1"
-          ></b-slider>
+ <b-slider v-model="weight" type="is-warning"   :min="40" :max="150" :step="1" ></b-slider>
+
         </div>
         <div>
           <button class="btnCalculatorResult" @click="checkRes">
@@ -136,9 +118,9 @@ export default {
       ],
       
       sex: 'man',
-      weight: '',
-      height: '',
-      age: '',
+      weight: 40,
+      height: 140,
+      age: 13,
       resultIs: '',
       showCalculator: false,
 
