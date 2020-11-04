@@ -104,7 +104,28 @@ export default {
     Carousel,
     // Navbar
   },
-  
+  props: {
+    sex: {
+      type: [String, Boolean],
+      default: "man",
+    },
+    age: {
+      type: Number,
+      default: null,
+    },
+    weight: {
+      type: Number,
+      default: null,
+    },
+    height: {
+      type: Number,
+      default: null,
+    },
+    resultIs: {
+      type: Number,
+      default: null,
+    },
+  },
 
   data() {
     return {
@@ -134,12 +155,7 @@ export default {
           title: "Гункани",
         },
       ],
-      
-      sex: 'man',
-      weight: '',
-      height: '',
-      age: '',
-      resultIs: '',
+
       showCalculator: false,
 
       filter: {
@@ -152,7 +168,6 @@ export default {
         isVegan: null,
       },
     };
-
   },
 
   computed: {
