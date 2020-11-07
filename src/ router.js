@@ -11,19 +11,29 @@ Vue.use(VueRouter);
 
 const routes = [
     {
-        path: "/", component : Shop
+        path: "/",
+        name: "shop",
+        component : Shop
     },
     {
-        path: "/about", component : About
+        path: "/about",
+        name: "about",
+        component : About
     },
     {
-        path: "/contact", component : Contact
+        path: "/contact", 
+        name: "contact",
+        component : Contact
     },
     {
-        path: "/delivery", component : Delivery
+        path: "/delivery", 
+        name: "delivery",
+        component : Delivery
     },
     {
-        path: "/cart", component : Cart
+        path: "/cart",
+        name: "cart",
+        component : Cart
     },
 ]
 

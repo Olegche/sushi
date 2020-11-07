@@ -10,7 +10,7 @@
       />
     </div>
 
-    <span> в кошику: {{ getMyStoreCartLength }} </span>
+    <span class="goToCartAndLength"> <span @click="GoToCartBtn"> корзина </span>  {{ getMyStoreCartLength }} </span>
   </div>
 </template>
 
@@ -34,6 +34,13 @@ export default {
     searchText(newValue) {
       this.$emit("title-filter", newValue);
     },
+  },
+
+  methods: {
+    GoToCartBtn() {
+      this.$router.push({ name: 'cart' })
+      
+    }
   },
 };
 </script>
@@ -75,5 +82,15 @@ export default {
 
   font-size: 20px;
   border-width: 0.1px;
+}
+.goToCartAndLength {
+  font-size: 30px;
+  cursor: pointer;
+  color:mediumseagreen;
+  
+  
+  
+
+
 }
 </style>
