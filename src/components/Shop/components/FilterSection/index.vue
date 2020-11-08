@@ -5,6 +5,7 @@
         
         <div>
              Фільтрувати за цінами:
+             
             <div class="minMaxPriceSlider">
 
                 <b-field> мінімальна ціна

@@ -57,8 +57,9 @@
           <td>{{ getTotalCalories }} ККАЛ</td>
           <td>{{ getTotalPrice }} гривень</td>
           <td>
-              <b-button  @click="GetOrder" type="is-waring" outlined >замовити</b-button>
-        
+            <b-button @click="GetOrder" type="is-warning" outlined
+              >замовити</b-button
+            >
           </td>
         </tr>
         <tr class="minOredr" v-if="getTotalPrice < 200">
@@ -140,7 +141,6 @@
         type="is-success"
         size="is-large"
         outlined
-       
         >Замовити</b-button
       >
     </div>
@@ -201,13 +201,10 @@
           <td>{{ product.price }}</td>
         </tr>
         <tr>
-            <th>всього</th>
-            <th>{{getTotalPrice}}</th>
-          
-          
+          <th>всього</th>
+          <th>{{ getTotalPrice }}</th>
         </tr>
       </table>
-      
     </div>
   </div>
 </template>
@@ -276,17 +273,16 @@ export default {
     },
 
     GetOrder() {
-      if (this.getTotalPrice >= 200) this.isOrder = true;
-      this.isVisible = false
+      if (this.getTotalPrice >= 200) {
+        this.isOrder = true;
+        this.isVisible = false;
+      }
     },
-
-    
 
     acceptAll() {
       this.accept = true;
       this.isOrder = false;
       this.isVisible = false;
-      
     },
   },
 };
@@ -357,7 +353,7 @@ table {
   position: absolute;
   margin-left: 10%;
 }
-.acceptCard *{
+.acceptCard * {
   border: 1px solid rgb(7, 7, 6);
   padding: 1px;
 }
