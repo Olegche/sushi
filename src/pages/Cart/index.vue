@@ -1,25 +1,20 @@
 <template>
   <div>
-    <div class="emptyCartShow"
-         v-if="getMyStoreCartLength < 1">
-
-      <h1  >
+    <div class="emptyCartShow" v-if="getMyStoreCartLength < 1">
+      <h1>
         В корзині пусто! <br />
-        Поверніться на головну і замовте смачні суші!
+        Поверніться на <a href="/">головну</a> і замовте смачні суші!
       </h1>
-      <img src="@/assets/images/emptyCartImage.gif" alt="">
-
+      <img src="@/assets/images/emptyCartImage.gif" alt="" />
     </div>
-    <span class="cartLength">
-      в кошику {{ getMyStoreCartLength }} товарів
-    </span>
-    <span class="container">
+
+    <div v-if="isVisible" class="container">
       <table v-if="getMyStoreCartLength > 0" class="table">
         <tr>
-          <th>Номер</th>
+          <th></th>
           <th>Кількість</th>
           <th>Назва</th>
-          <th>Зображення</th>
+          <th></th>
           <th>Калорії</th>
           <th>Ціна</th>
           <th></th>
@@ -62,11 +57,158 @@
           <td>{{ getTotalCalories }} ККАЛ</td>
           <td>{{ getTotalPrice }} гривень</td>
           <td>
-            <button>замовити</button>
+              <b-button  @click="GetOrder" type="is-waring" outlined >замовити</b-button>
+        
           </td>
         </tr>
+        <tr class="minOredr" v-if="getTotalPrice < 200">
+          *мінімальне замовлення 200грн.
+        </tr>
       </table>
-    </span>
+    </div>
+    <div class="orderField" v-if="isOrder">
+      <b-field label="* Ім'я:">
+        <b-input required v-model="costumerName"></b-input>
+      </b-field>
+
+      <b-field label="* Телефон">
+        <b-input
+          required
+          v-model="tel"
+          type="number"
+          name="phone"
+          placeholder="+380679587995"
+          title="введіть номер"
+          minlength="10"
+          maxlength="13"
+        >
+        </b-input>
+      </b-field>
+
+      <b-field label="* Населений пункт:">
+        <b-input required v-model="city"></b-input>
+      </b-field>
+
+      <b-field label="* Вулиця:">
+        <b-input required v-model="street"></b-input>
+      </b-field>
+
+      <b-field label="* Будинок:">
+        <b-input required v-model="house"></b-input>
+      </b-field>
+
+      <b-field label="Під'їзд:">
+        <b-input v-model="entance" type="number" :min="1" :max="20"></b-input>
+      </b-field>
+
+      <b-field label="Квартира:">
+        <b-input v-model="flat" type="number" :min="1" :max="1000"></b-input>
+      </b-field>
+
+      <div>
+        <b-checkbox
+          v-model="dontRingDore"
+          size="is-large"
+          :value="false"
+          type="is-danger"
+        >
+          Не дзвонити в двері!
+        </b-checkbox>
+        <br />
+        <b-checkbox
+          v-model="leaveOrderAtDore"
+          size="is-large"
+          :value="false"
+          type="is-danger"
+        >
+          Залишити під дверями!
+        </b-checkbox>
+      </div>
+
+      <div>
+        <b-field
+          label="Побажання до замовлення "
+          :label-position="labelPosition"
+        >
+          <b-input v-model="wishList" maxlength="200" type="textarea"></b-input>
+        </b-field>
+      </div>
+
+      <b-button
+        v-if="costumerName && tel && city && house && street"
+        @click="acceptAll"
+        type="is-success"
+        size="is-large"
+        outlined
+       
+        >Замовити</b-button
+      >
+    </div>
+    <div class="acceptCard" v-if="accept">
+      <table>
+        <tr>
+          <th>Замовлення прийняте !</th>
+          <th>{{ new Date() }}</th>
+        </tr>
+        <tr>
+          <th>Ім'я</th>
+          <td>{{ costumerName }}</td>
+        </tr>
+        <tr>
+          <th>тел</th>
+          <td>{{ tel }}</td>
+        </tr>
+        <tr>
+          <th>місто</th>
+          <td>{{ city }}</td>
+        </tr>
+
+        <tr>
+          <th>вулиця</th>
+          <td>{{ street }}</td>
+        </tr>
+
+        <tr>
+          <th>дом</th>
+          <td>{{ house }}</td>
+        </tr>
+        <tr>
+          <th>під'їзд</th>
+          <td>{{ entance }}</td>
+        </tr>
+        <tr>
+          <th>кв</th>
+          <td>{{ flat }}</td>
+        </tr>
+        <tr>
+          <th>не дзвонити в двері?</th>
+          <td>{{ dontRingDore }}</td>
+        </tr>
+        <tr>
+          <th>залишити під дверима?</th>
+          <td>{{ leaveOrderAtDore }}</td>
+        </tr>
+        <tr>
+          <th>кометарі</th>
+          <td>
+            {{ wishList }}
+          </td>
+        </tr>
+
+        <tr v-for="product in getMyStoreCart" :key="product.id">
+          <td>{{ product.title }}</td>
+          <td>{{ product.count }} шт.</td>
+          <td>{{ product.price }}</td>
+        </tr>
+        <tr>
+            <th>всього</th>
+            <th>{{getTotalPrice}}</th>
+          
+          
+        </tr>
+      </table>
+      
+    </div>
   </div>
 </template>
 
@@ -99,6 +241,25 @@ export default {
     },
   },
 
+  data() {
+    return {
+      isVisible: true,
+      isOrder: false,
+      labelPosition: "on-border",
+      costumerName: "",
+      tel: "",
+      city: "",
+      street: "",
+      house: "",
+      entance: "",
+      flat: "",
+      dontRingDore: false,
+      leaveOrderAtDore: false,
+      wishList: "",
+      accept: false,
+    };
+  },
+
   methods: {
     ...mapActions(["removeFromCart", "addToMyStoreCart", "decrementCart"]),
 
@@ -112,6 +273,20 @@ export default {
 
     minusProduct(id) {
       this.decrementCart(id);
+    },
+
+    GetOrder() {
+      if (this.getTotalPrice >= 200) this.isOrder = true;
+      this.isVisible = false
+    },
+
+    
+
+    acceptAll() {
+      this.accept = true;
+      this.isOrder = false;
+      this.isVisible = false;
+      
     },
   },
 };
@@ -165,36 +340,49 @@ table {
   transform: scale(1.1) rotate(1turn);
   cursor: pointer;
 }
-.cartLength {
-  margin: 20px;
-  font-size: 20px;
-  color: forestgreen;
+
+.orderField {
+  text-align: center;
+  padding: 20px;
+  max-width: 30%;
+  margin: auto;
+}
+
+.minOredr {
+  text-align: right;
   float: right;
-  padding: 3px;
-  box-shadow: 0 0 10px rgba(56, 95, 81, 0.5);
-  border-radius: 7px;
+  color: red;
+}
+.acceptCard {
+  position: absolute;
+  margin-left: 10%;
+}
+.acceptCard *{
+  border: 1px solid rgb(7, 7, 6);
+  padding: 1px;
 }
 .emptyCartShow {
   margin: 100px auto;
   text-align: center;
   font-size: 30px;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   background-color: rgb(255, 217, 0);
   color: rgb(32, 26, 26);
   max-width: 50%;
   border-radius: 20px;
-opacity:0; 
-transition: 1s; 
-animation: show 3s 1; 
-animation-fill-mode: forwards; 
-animation-delay: 0.5ms; 
+  opacity: 0;
+  transition: 1s;
+  animation: show 3s 1;
+  animation-fill-mode: forwards;
+  animation-delay: 0.5ms;
 }
-@keyframes show{
-0%{
-opacity:0;
-}
-100% {
-opacity:1;
-}
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 </style>

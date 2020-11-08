@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="search">
-      шукай улюблені страви за назвою
+       Шукай улюблені страви за назвою:
       <input
         type="text"
         v-model="searchText"
@@ -10,7 +10,6 @@
       />
     </div>
 
-    <span class="goToCartAndLength"> <span @click="GoToCartBtn"> корзина </span>  {{ getMyStoreCartLength }} </span>
   </div>
 </template>
 
@@ -49,6 +48,7 @@ export default {
 .container {
   display: flex;
   justify-content: space-between;
+  
 }
 
 .search {
@@ -62,35 +62,5 @@ export default {
   color: darksalmon;
   border-color: darksalmon;
 }
-.cart {
-  margin: 10px;
-  color: darksalmon;
-  font-size: 25px;
-}
-.bntClean {
-  border-radius: 7px;
-  background-color: rgba(243, 54, 54, 0.837);
-  color: lightgoldenrodyellow;
-  border-color: rgba(245, 108, 108, 0.837);
-  font-size: 20px;
-  border-width: 0.1px;
-}
-.btnRemove {
-  border-radius: 7px;
-  background-color: rgba(250, 229, 72, 0.837);
-  color: rgb(75, 78, 80);
 
-  font-size: 20px;
-  border-width: 0.1px;
-}
-.goToCartAndLength {
-  font-size: 30px;
-  cursor: pointer;
-  color:mediumseagreen;
-  
-  
-  
-
-
-}
 </style>

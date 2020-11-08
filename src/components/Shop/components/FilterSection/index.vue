@@ -11,6 +11,7 @@
             <b-slider  v-model="minPrice" :min="0" :max="800" :step="100" type="is-success" ticks>
             </b-slider>
         </b-field>
+      
 
         <b-field> максимальна ціна
             <b-slider v-model="maxPrice" :min="0" :max="2000" :step="100" type="is-danger" ticks>

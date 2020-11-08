@@ -250,6 +250,8 @@ const store = new Vuex.Store({
 
     },
 
+  
+
     removeFromCart(state, index) {
       state.MyStoreCart.splice(index, 1)
     },
@@ -270,6 +272,8 @@ const store = new Vuex.Store({
     }, id) {
       commit('addProductToMyStoreCart', id)
     },
+
+   
 
     removeFromCart({
       commit
