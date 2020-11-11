@@ -235,9 +235,20 @@ const store = new Vuex.Store({
     MyStoreCart: [
 
     ],
+
+    userCalories: {
+      sex: "man",
+      weight: 40,
+      height: 140,
+      age: 13,
+      resultIs: "",
+      isCalculated: "",
+    }
+
   },
 
   mutations: {
+
     addProductToMyStoreCart(state, id) {
       const product = state.MyStoreCart.find((item) => item.id === id)
       if (product) product.count++
@@ -246,11 +257,28 @@ const store = new Vuex.Store({
           id,
           count: 1,
         })
-
-
     },
 
-  
+    setUserSex(state, sex) {
+      state.userCalories.sex = sex
+    },
+    setUserWeight(state, weight) {
+      state.userCalories.weight = weight
+    },
+    setUserHeight(state, height) {
+      state.userCalories.height = height
+    },
+    setUserAge(state, age) {
+      state.userCalories.age = age
+    },
+    setUserResultIs(state, resultIs) {
+      state.userCalories.resultIs = resultIs
+    },
+    setUserIsCalculated(state, isCalculated) {
+      state.userCalories.isCalculated = isCalculated
+    },
+
+
 
     removeFromCart(state, index) {
       state.MyStoreCart.splice(index, 1)
@@ -259,9 +287,9 @@ const store = new Vuex.Store({
     decrementCart(state, id) {
       const product = state.MyStoreCart.find((item) => item.id === id)
       product.count--
-      if(product.count < 1)
-      product.count = 1
-  
+      if (product.count < 1)
+        product.count = 1
+
     }
 
   },
@@ -273,7 +301,38 @@ const store = new Vuex.Store({
       commit('addProductToMyStoreCart', id)
     },
 
-   
+    setUserSex({
+      commit
+    }, sex) {
+      commit('setUserSex', sex)
+    },
+    setUserWeight({
+      commit
+    }, weight) {
+      commit('setUserWeight', weight)
+    },
+    setUserHeight({
+      commit
+    }, height) {
+      commit('setUserHeight', height)
+    },
+    setUserAge({
+      commit
+    }, age) {
+      commit('setUserAge', age)
+    },
+    setUserResultIs({
+      commit
+    }, resultIs) {
+      commit('setUserResultIs', resultIs)
+    },
+    setUserIsCalculated({
+      commit
+    }, isCalculated) {
+      commit ('setUserIsCalculated', isCalculated)
+    },
+
+
 
     removeFromCart({
       commit
@@ -281,10 +340,12 @@ const store = new Vuex.Store({
       commit('removeFromCart', index)
     },
 
-    decrementCart( {commit}, id) {
+    decrementCart({
+      commit
+    }, id) {
       commit('decrementCart', id)
     }
-    
+
   },
 
 
@@ -307,7 +368,14 @@ const store = new Vuex.Store({
       return arr
     },
 
-    myProducts: (state) => state.myStoreProducts
+    myProducts: (state) => state.myStoreProducts,
+
+    getUserSex: (state) => state.userCalories.sex,
+    getUserWeight: (state) => state.userCalories.weight,
+    getUserHeight: (state) => state.userCalories.height,
+    getUserAge: (state) => state.userCalories.age,
+    getUserResultIs: (state) => state.userCalories.resultIs,
+    getUserIsCalculated: (state) => state.userCalories.isCalculated,
 
 
   }

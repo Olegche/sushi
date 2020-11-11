@@ -9,64 +9,90 @@
     </div>
 
     <div v-if="isVisible" class="container">
-      <table v-if="getMyStoreCartLength > 0" class="table">
-        <tr>
-          <th></th>
-          <th>Кількість</th>
-          <th>Назва</th>
-          <th></th>
-          <th>Калорії</th>
-          <th>Ціна</th>
-          <th></th>
-        </tr>
-        <tr v-for="(product, index) in getMyStoreCart" :key="product.id">
-          <td>
-            {{ index + 1 }}
-          </td>
-          <td>
-            <span @click="addProduct(product.id)"> + </span>
-            {{ product.count }}
-            <span @click="minusProduct(product.id)"> - </span>
-          </td>
+      <div v-if="getMyStoreCartLength > 0">
+        <table class="table">
+          <tr>
+            <th></th>
+            <th>Кількість</th>
+            <th>Назва</th>
+            <th></th>
+            <th>Калорії</th>
+            <th>Ціна</th>
+            <th></th>
+          </tr>
+          <tr v-for="(product, index) in getMyStoreCart" :key="product.id">
+            <td>
+              {{ index + 1 }}
+            </td>
+            <td>
+              <span @click="minusProduct(product.id)">-</span>
+              {{ product.count }}
+              <span @click="addProduct(product.id)">+</span>
+            </td>
 
-          <td>
-            {{ product.title }}
-          </td>
-          <td>
-            <img :src="product.img" alt="product.title" class="cart-image" />
-          </td>
+            <td>
+              {{ product.title }}
+            </td>
+            <td>
+              <img :src="product.img" alt="product.title" class="cart-image" />
+            </td>
 
-          <td>{{ product.calories }} ККАЛ</td>
+            <td>{{ product.calories }} ККАЛ</td>
 
-          <td>{{ product.price }} гривень</td>
+            <td>{{ product.price }} гривень</td>
 
-          <td>
-            <button
-              class="btnRemoveProductFromCart"
-              @click="deleteFromCart(index)"
-            >
-              Х
-            </button>
-          </td>
-        </tr>
-        <tr class="totalPriceAndCalories">
-          <td class="totalPriceAndCalories">всього</td>
-          <td>{{ getMyStoreCartLength }} шт</td>
-          <td></td>
-          <td></td>
-          <td>{{ getTotalCalories }} ККАЛ</td>
-          <td>{{ getTotalPrice }} гривень</td>
-          <td>
-            <b-button @click="GetOrder" type="is-warning" outlined
-              >замовити</b-button
-            >
-          </td>
-        </tr>
-        <tr class="minOredr" v-if="getTotalPrice < 200">
-          *мінімальне замовлення 200грн.
-        </tr>
-      </table>
+            <td>
+              <button
+                class="btnRemoveProductFromCart"
+                @click="deleteFromCart(index)"
+              >
+                Х
+              </button>
+            </td>
+          </tr>
+          <tr class="totalPriceAndCalories">
+            <td class="totalPriceAndCalories">всього</td>
+            <td>{{ getMyStoreCartLength }} шт</td>
+            <td></td>
+            <td></td>
+            <td>{{ getTotalCalories }} ККАЛ</td>
+            <td>{{ getTotalPrice }} гривень</td>
+            <td>
+              <b-button @click="GetOrder" type="is-warning" outlined
+                >замовити</b-button
+              >
+            </td>
+          </tr>
+          <tr class="minOredr" v-if="getTotalPrice < 200">
+            *мінімальне замовлення 200грн.
+          </tr>
+          <tr></tr>
+        </table>
+        <div v-if="getUserIsCalculated">
+          <p v-if="getUserSex === 'man'">оскільки ви мужній Чоловік</p>
+          <p v-if="getUserSex === 'wooman'">оскільки ви Прекрасна жінка</p>
+          вагою {{ getUserWeight }} кг і зростом {{ getUserHeight }} см віком в
+          {{ getUserAge }} років рекомендована норма ККАЛ на день становить
+          {{ getUserResultIs }}
+
+          <div class="toMatchSushi" v-if="getTotalCalories > getUserResultIs + 1000">
+              <h1>
+                  {{getTotalCalories}} ККАЛ  Не забагато? 
+                   <br>
+                    може оце все з'їсте на трьох?)
+              </h1>
+            
+            <img src="@/assets/images/toMutchSushi.gif" alt="">
+          </div>
+        </div>
+        <span class="mainDivCalculator">
+          <calcu />
+        </span>
+      </div>
+
+      <div></div>
     </div>
+
     <div class="orderField" v-if="isOrder">
       <b-field label="* Ім'я:">
         <b-input required v-model="costumerName"></b-input>
@@ -210,14 +236,26 @@
 </template>
 
 <script>
+import Calcu from "../../components/Shop/components/Calcu";
 import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Cart",
 
-  components: {},
+  components: {
+    Calcu,
+  },
 
   computed: {
-    ...mapGetters(["getMyStoreCartLength", "getMyStoreCart"]),
+    ...mapGetters([
+      "getMyStoreCartLength",
+      "getMyStoreCart",
+      "getUserSex",
+      "getUserWeight",
+      "getUserHeight",
+      "getUserAge",
+      "getUserResultIs",
+      "getUserIsCalculated",
+    ]),
 
     getTotalPrice() {
       let res = [];
@@ -357,6 +395,19 @@ table {
   border: 1px solid rgb(7, 7, 6);
   padding: 1px;
 }
+.mainDivCalculator {
+  display: block;
+  text-align: center;
+  width: 162px;
+  height: 100px;
+  max-width: 200px;
+  float: right;
+  border-radius: 20px;
+  padding: 9px;
+  bottom: 300px;
+
+  min-height: 30em;
+}
 .emptyCartShow {
   margin: 100px auto;
   text-align: center;
@@ -381,4 +432,32 @@ table {
     opacity: 1;
   }
 }
+
+.toMatchSushi{
+    margin: 100px auto;
+  text-align: center;
+  font-size: 30px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  background-color: rgb(255, 217, 0);
+  color: rgb(32, 26, 26);
+  max-width: 50%;
+  border-radius: 20px;
+  opacity: 0;
+  transition: 1s;
+  animation: show 3s 1;
+  animation-fill-mode: forwards;
+  animation-delay: 0.5ms;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 </style>

@@ -47,8 +47,13 @@
             порахувати
           </button>
         </div>
-        <div v-if="resultIs && resultIs > 0">{{ resultIs }} ккл на день</div>
+        <div v-if="resultIs && resultIs > 0">
+          Ваша норма становить {{ resultIs }} ккл на день
+        </div>
         <div>
+          <div class="TotalCaloriesinCart">
+            Калорійність усіх товарів в корзині :{{ getTotalCalories() }}ккл
+          </div>
           <button class="btnCalculatorHide" @click="hide">x</button>
         </div>
       </div>
@@ -57,11 +62,17 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Calcu",
 
+  computed: {
+    ...mapGetters(["getMyStoreCartLength", "getMyStoreCart"]),
+  },
+
   data() {
     return {
+      isCalculated: false,  
       sex: "man",
       weight: 40,
       height: 140,
@@ -72,7 +83,17 @@ export default {
   },
 
   methods: {
+    ...mapActions([
+      "setUserSex",
+      "setUserWeight",
+      "setUserHeight",
+      "setUserAge",
+      "setUserResultIs",
+      "setUserIsCalculated"
+    ]),
+
     checkRes() {
+        this.isCalculated = true
       if (this.sex === "man") {
         this.resultIs = Math.round(
           (10 * this.weight + 6.25 * this.height - (5 * this.age + 5)) * 1.3
@@ -88,6 +109,37 @@ export default {
     },
     hide() {
       this.showCalculator = false;
+    },
+    getTotalCalories() {
+      if (this.getMyStoreCartLength > 0) {
+        let res = [];
+        for (let product of this.getMyStoreCart) {
+          res.push(product.calories * product.count);
+        }
+        res = res.reduce((a, b) => a + b);
+        return res;
+      } else return "0";
+    },
+  },
+
+  watch: {
+    sex(newValue) {
+      this.setUserSex(newValue);
+    },
+    weight(newValue) {
+      this.setUserWeight(newValue);
+    },
+    height(newValue) {
+      this.setUserHeight(newValue);
+    },
+    age(newValue) {
+      this.setUserAge(newValue);
+    },
+    resultIs(newValue) {
+      this.setUserResultIs(newValue);
+    },
+    isCalculated(newValue) {
+        this.setUserIsCalculated(newValue)
     },
   },
 };
@@ -119,12 +171,9 @@ export default {
   color: white;
   margin-bottom: 7px;
   cursor: pointer;
-  
 }
-.btnCalculatorResult:hover{
-    
+.btnCalculatorResult:hover {
   cursor: pointer;
-    
 }
 .btnCalculatorHide {
   background-color: rgb(245, 56, 56);
@@ -142,8 +191,9 @@ export default {
 .btnCalculatorHide:hover {
   cursor: pointer;
   transform: scale(1.1) rotate(1turn);
-  
+}
 
-
+.TotalCaloriesinCart {
+  background: rgb(248, 238, 182);
 }
 </style>

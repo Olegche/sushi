@@ -5,6 +5,7 @@
         
         <div>
              Фільтрувати за цінами:
+
              
             <div class="minMaxPriceSlider">
 
@@ -87,7 +88,8 @@
                 maxCalories:null,
                 minCalories:null,
                 category: null,
-                isVegan: null
+                isVegan: null,
+                
 
             }
         },
@@ -147,6 +149,9 @@
                 this.isVegan = null
             }
         },
+        // mounted () {
+        //     this.numbers=[this.minPrice, this.maxPrice];
+        // },
     }
 </script>
 
