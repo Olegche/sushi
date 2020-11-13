@@ -375,7 +375,7 @@ const store = new Vuex.Store({
     getUserHeight: (state) => state.userCalories.height,
     getUserAge: (state) => state.userCalories.age,
     getUserResultIs: (state) => state.userCalories.resultIs,
-    getUserIsCalculated: (state) => state.userCalories.isCalculated,
+    getUserIsCalculated: (state) => state.userCalories.isCalculated
 
 
   }

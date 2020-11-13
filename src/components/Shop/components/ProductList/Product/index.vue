@@ -33,7 +33,7 @@ export default {
     },
     img: {
       type: String,
-      default: require("@/assets/images/smile.jpg"),
+      default: require("@/assets/images/emptyCartImage.gif"),
     },
     title: {
       type: String,
