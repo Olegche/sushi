@@ -1,21 +1,16 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Buefy from 'buefy'
-
 import store from './store'
-
 import 'buefy/dist/buefy.css'
-
 import router from "./ router";
 
-Vue.config.productionTip = false
+import firebase from 'firebase';
+import "./firebase-config";
+Vue.prototype.$firebase = firebase;
 
+Vue.config.productionTip = false
 Vue.use(Buefy)
-
-
-Vue.config.productionTip = false
-
-
 
 new Vue({
   router,

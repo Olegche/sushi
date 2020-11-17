@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Delivery from "./pages/Delivery";
 import Cart from "./pages/Cart";
+import addProductForm from "./pages/addProductForm"
 
 Vue.use(VueRouter);
 
@@ -34,6 +35,11 @@ const routes = [
         path: "/cart",
         name: "cart",
         component : Cart
+    },
+    {
+        path: "/addProductForm",
+        name: "addProductForm",
+        component : addProductForm
     },
 ]
 

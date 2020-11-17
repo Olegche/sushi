@@ -249,6 +249,10 @@ const store = new Vuex.Store({
 
   mutations: {
 
+    setMyStoreProducts(state, data) {
+      state.myStoreProducts = [...state.myStoreProducts, ...data];
+    },
+
     addProductToMyStoreCart(state, id) {
       const product = state.MyStoreCart.find((item) => item.id === id)
       if (product) product.count++
@@ -295,6 +299,45 @@ const store = new Vuex.Store({
   },
 
   actions: {
+    loadData({ commit }, self) { // add 
+      const db = self.$firebase.firestore();
+      db.collection("myStoreProducts")
+        .get()
+        .then((snap) => {
+          const myStoreProducts = [];
+          snap.forEach((doc) => {
+            myStoreProducts.push({ id: doc.id, ...doc.data() });
+          });
+          commit("setMyStoreProducts", myStoreProducts);
+        })
+      },
+
+      addProduct({ dispatch }, { self, productData }) {
+        // commit("addProductToList", productData);
+  
+        const db = self.$firebase.firestore();
+  
+        // Change a document in collection
+        db.collection("myStoreProducts")
+          .doc()
+          .set({
+            title: productData.title,
+            price: productData.price,
+            img: productData.img,
+            category: productData.category,
+            calories: productData.calories,
+            isVegan: productData.isVegan,
+
+          })
+          .then(function() {
+            console.log("Document successfully written!");
+            dispatch("loadData", self);
+          })
+          .catch(function(error) {
+            console.error("Error writing document: ", error);
+          });
+      },
+
     addToMyStoreCart({
       commit
     }, id) {

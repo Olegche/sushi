@@ -23,6 +23,9 @@
         <b-navbar-item tag="router-link" :to="{ path: '/contact' }">
           Контакти
         </b-navbar-item>
+        <b-navbar-item tag="router-link" :to="{ path: '/addProductForm' }">
+          add product
+        </b-navbar-item>
       </b-navbar-dropdown>
 
       <div class="wrapper" v-if="signUpBtn">

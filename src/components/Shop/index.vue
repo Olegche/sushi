@@ -41,7 +41,7 @@ import HeaderSection from "./components/HeaderSection";
 import FilterSection from "./components/FilterSection";
 import Carousel from "./components/Carousel";
 import Calcu from "./components/Calcu";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Shop",
@@ -134,6 +134,9 @@ export default {
   },
 
   methods: {
+
+    ...mapActions(['loadData']),
+
     setTextFilterData(seachText) {
       this.filter = {
         ...this.filter,
@@ -153,6 +156,10 @@ export default {
     sortByMaxPrice() {
       return this.myProducts.sort((a, b) => b.price - a.price);
     },
+  },
+
+  mounted() {
+    this.loadData(this)
   },
 };
 </script>
