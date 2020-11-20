@@ -47,7 +47,7 @@
 
                  <b-field type="is-success">
             <b-select v-model="category"  placeholder="Оберіть улюблені страви">
-                <option v-for="cat in categoriesList" :key="cat.id"
+                <option v-for="cat in getCategoryList" :key="cat.id"
                     :value="cat.id">{{cat.title}}</option>
             </b-select>
         </b-field>
@@ -71,15 +71,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
     export default {
         name:'FilterSection',
-        props: {
+        // props: {
            
-            categoriesList: {
-                type: Array,
-                default: ()=>[]
-            },
-        },
+        //     categoriesList: {
+        //         type: Array,
+        //         default: ()=>[]
+        //     },
+        // },
 
         data() {
             return {
@@ -95,6 +97,8 @@
         },
 
         computed: {
+            ...mapGetters(["getCategoryList"]),
+
             sliderType(){
             if ((this.maxCalories <=2000 && this.maxCalories > 1000)|| (this.minCalories <=2000 && this.minCalories > 1000)){
                 return "is-danger";

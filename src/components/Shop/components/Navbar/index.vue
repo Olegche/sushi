@@ -23,8 +23,11 @@
         <b-navbar-item tag="router-link" :to="{ path: '/contact' }">
           Контакти
         </b-navbar-item>
-        <b-navbar-item tag="router-link" :to="{ path: '/addProductForm' }">
+        <b-navbar-item tag="router-link" :to="{ path: '/addProductForm/new' }">
           add product
+        </b-navbar-item>
+        <b-navbar-item tag="router-link" :to="{ path: '/editProductForm' }">
+          edit product
         </b-navbar-item>
       </b-navbar-dropdown>
 

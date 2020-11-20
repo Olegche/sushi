@@ -27,7 +27,7 @@
     </div>
     <div class="container">
       <filter-section
-        :categories-list="categoriesList"
+       
         @filter-changed="setFilter"
       />
       <product-list :products="filteredProducts" />
@@ -54,34 +54,11 @@ export default {
     Calcu,
   },
 
+
+
   data() {
     return {
-      categoriesList: [
-        {
-          id: "",
-          title: "Усі страви",
-        },
-        {
-          id: "sushi",
-          title: "Суши",
-        },
-        {
-          id: "roll",
-          title: "Роли",
-        },
-        {
-          id: "set",
-          title: " Сети",
-        },
-        {
-          id: "salat",
-          title: "Салат",
-        },
-        {
-          id: "gunkan",
-          title: "Гункани",
-        },
-      ],
+
 
       filter: {
         textFilter: null,

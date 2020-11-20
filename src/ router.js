@@ -7,6 +7,8 @@ import Contact from "./pages/Contact";
 import Delivery from "./pages/Delivery";
 import Cart from "./pages/Cart";
 import addProductForm from "./pages/addProductForm"
+import EditProductForm from "./pages/EditProductForm"
+
 
 Vue.use(VueRouter);
 
@@ -37,10 +39,24 @@ const routes = [
         component : Cart
     },
     {
-        path: "/addProductForm",
+        path: "/addProductForm/new",
         name: "addProductForm",
         component : addProductForm
+        
     },
+    {
+        path: "/addProductForm/:product_id",
+        name: "addProductForms",
+        component : addProductForm
+
+    },
+    {
+        path: "/editProductForm",
+        name: "EditProductForm",
+        component : EditProductForm
+        
+    },
+
 ]
 
 const router = new VueRouter (

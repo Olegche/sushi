@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import firebase from "firebase";
 
 
 Vue.use(Vuex)
@@ -243,14 +244,45 @@ const store = new Vuex.Store({
       age: 13,
       resultIs: "",
       isCalculated: "",
-    }
+    },
+
+    categoriesList: [
+      {
+        id: "",
+        title: "Усі страви",
+      },
+      {
+        id: "sushi",
+        title: "Суши",
+      },
+      {
+        id: "roll",
+        title: "Роли",
+      },
+      {
+        id: "set",
+        title: " Сети",
+      },
+      {
+        id: "salat",
+        title: "Салат",
+      },
+      {
+        id: "gunkan",
+        title: "Гункани",
+      },
+      {
+        id: "drink",
+        title: "Напої",
+      },
+    ],
 
   },
 
   mutations: {
 
     setMyStoreProducts(state, data) {
-      state.myStoreProducts = [...state.myStoreProducts, ...data];
+      state.myStoreProducts = [...data];
     },
 
     addProductToMyStoreCart(state, id) {
@@ -299,8 +331,8 @@ const store = new Vuex.Store({
   },
 
   actions: {
-    loadData({ commit }, self) { // add 
-      const db = self.$firebase.firestore();
+    loadData({ commit }) { // add 
+      const db = firebase.firestore();
       db.collection("myStoreProducts")
         .get()
         .then((snap) => {
@@ -312,12 +344,11 @@ const store = new Vuex.Store({
         })
       },
 
-      addProduct({ dispatch }, { self, productData }) {
-        // commit("addProductToList", productData);
+      addProduct({ dispatch }, { productData }) {
   
-        const db = self.$firebase.firestore();
+        const db = firebase.firestore();
   
-        // Change a document in collection
+       
         db.collection("myStoreProducts")
           .doc()
           .set({
@@ -331,12 +362,53 @@ const store = new Vuex.Store({
           })
           .then(function() {
             console.log("Document successfully written!");
-            dispatch("loadData", self);
+            dispatch("loadData");
           })
           .catch(function(error) {
             console.error("Error writing document: ", error);
           });
       },
+
+      updateProduct({ dispatch }, { productData }) {
+      
+      const db = firebase.firestore();
+  
+  
+      db.collection("myStoreProducts")
+        .doc(productData.id)
+        .set({
+          title: productData.title,
+          price: productData.price,
+          img: productData.img,
+          category: productData.category,
+          calories: productData.calories,
+          isVegan: productData.isVegan,
+
+        })
+        .then(function() {
+          console.log("Document successfully written!");
+          dispatch("loadData");
+        })
+        .catch(function(error) {
+          console.error("Error writing document: ", error);
+        });
+    },
+
+    deleteProduct({ dispatch }, productId) {
+      // commit("addProductToList", productData);
+      const db = firebase.firestore();
+      // Change a document in collection
+      db.collection("myStoreProducts")
+        .doc(productId)
+        .delete()
+        .then(function() {
+          console.log("Document successfully del!");
+          dispatch("loadData");
+        })
+        .catch(function(error) {
+          console.error("Error writing document: ", error);
+        });
+    },
 
     addToMyStoreCart({
       commit
@@ -411,7 +483,14 @@ const store = new Vuex.Store({
       return arr
     },
 
+    getProductById: (state) => (id) => {
+      return state.myStoreProducts.find((item) => item.id == id);
+    },
+
+ 
     myProducts: (state) => state.myStoreProducts,
+
+    getCategoryList: (state) => state.categoriesList,
 
     getUserSex: (state) => state.userCalories.sex,
     getUserWeight: (state) => state.userCalories.weight,

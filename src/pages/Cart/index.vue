@@ -135,7 +135,7 @@
       <div>
         <b-checkbox
           v-model="dontRingDore"
-          size="is-large"
+          size="is-middle"
           :value="false"
           type="is-danger"
         >
@@ -144,7 +144,7 @@
         <br />
         <b-checkbox
           v-model="leaveOrderAtDore"
-          size="is-large"
+          size="is-middle"
           :value="false"
           type="is-danger"
         >
