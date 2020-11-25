@@ -44,7 +44,7 @@
         is Vegan?
       </b-checkbox>
 
-      <button @click="onAdd">Додати</button>
+      <button @click="onAdd();toEdit()" >Додати</button>
     </div>
   </div>
 </template>
@@ -82,7 +82,7 @@ export default {
       //Крок 5. Використовуємо1 функцію-action
       if (!this.productId)
         this.addProduct({
-          
+          self: this,
           productData: {
             title,
             price,
@@ -94,7 +94,7 @@ export default {
         });
       else
         this.updateProduct({
-          
+          self: this,
           productData: {
             id: this.productId,
             title,
@@ -106,6 +106,12 @@ export default {
           },
         });
     },
+    toEdit(){
+       this.$router.push({
+        name: "EditProductForm",
+        
+      });
+    }
   },
    mounted() {
     if (this.productId) {

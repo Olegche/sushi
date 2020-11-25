@@ -174,7 +174,7 @@ export default {
   margin-bottom: 20%;
   text-align: center;
   padding: 90px;
-  margin-top: 10%;
+  margin-top: 20%;
   background-color: rgba(119, 136, 153, 0.611);
   width: 309px;
   height: 300px;

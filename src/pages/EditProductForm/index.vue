@@ -22,10 +22,11 @@
 
       <img :src="product.img" alt="product.title" />
       <div>
-        <button @click="onEdit(product.id)">edit</button>
-        <button @click="deleteFromBase(product.id)">delete</button>
+        <button class="editButton" @click="onEdit(product.id)">edit</button>
+        <button class="delButton" @click="deleteFromBase(product.id)">delete</button>
       </div>
     </div>
+   
   </div>
 </template>
 
@@ -36,6 +37,12 @@ export default {
 
   computed: {
     ...mapGetters(["myProducts"]),
+  },
+
+  data() {
+      return {
+          confirmDeleteShow: false
+      }
   },
 
   methods: {
@@ -52,6 +59,10 @@ export default {
         this.deleteProduct(productId)
     }
   },
+showDeleteForm() {
+    this.confirmDeleteShow = true
+}
+
 };
 </script>
 
@@ -80,5 +91,14 @@ export default {
   border-width: 0px;
   cursor: pointer;
   margin: 3px;
+}
+.editButton:hover{
+background-color:  rgb(250, 227, 99);
+color: darkgreen
+}
+
+.delButton:hover{
+background-color:  rgb(255, 97, 97);
+color: rgb(245, 247, 229)
 }
 </style>

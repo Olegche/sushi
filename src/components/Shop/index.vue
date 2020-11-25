@@ -58,7 +58,7 @@ export default {
 
   data() {
     return {
-
+      
 
       filter: {
         textFilter: null,
@@ -73,7 +73,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["myProducts"]),
+    ...mapGetters(["myProducts","getCategoryList"]),
 
     filteredProducts() {
       if (this.isFilterEmpty) return this.myProducts;
