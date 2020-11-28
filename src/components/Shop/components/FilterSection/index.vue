@@ -2,40 +2,37 @@
   <div class="container">
     <div class="is-two-fifths">
       <div>
-    
-
         Фільтрувати за цінами:
-          
 
         <div class="inputControls">
           <span>
             від
-            <input type="number" v-model="minPrice" min="0" max="3000" /> 
+            <input type="number" v-model="minPrice" min="0" max="3000" />
           </span>
 
           <span>
             до
-            <input type="number" v-model="maxPrice" min="0" max="3000"  /> грн.
+            <input type="number" v-model="maxPrice" min="0" max="3000" /> грн.
           </span>
         </div>
       </div>
       <div>
         <hr />
-       
- Контролювати калорійність:
+
+        Контролювати калорійність:
         <div class="inputControls">
-            
           <span>
             від
-            <input type="number" v-model="minCalories" min="0" max="3000" /> 
+            <input type="number" v-model="minCalories" min="0" max="3000" />
           </span>
 
-           <span>
+          <span>
             до
-            <input type="number" v-model="maxCalories" min="0" max="3000" /> 
-          </span> ККАЛ
+            <input type="number" v-model="maxCalories" min="0" max="3000" />
+          </span>
+          ККАЛ
         </div>
-        
+
         <hr />
 
         <div class="categoryFilter">
@@ -119,7 +116,7 @@ export default {
     },
     minCalories(newValue) {
       this.$emit("filter-changed", {
-        minCalories: parseInt(newValue)|| null,
+        minCalories: parseInt(newValue) || null,
       });
     },
     category(newValue) {
@@ -181,4 +178,6 @@ export default {
 .categoryFilter select {
   width: 100px;
 }
+
+
 </style>

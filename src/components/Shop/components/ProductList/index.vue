@@ -16,6 +16,7 @@
         :isVegan="item.isVegan"
       />
     </div>
+    
   </div>
 </template>
 
@@ -34,6 +35,7 @@ export default {
       default: null,
     },
   },
+  
 };
 </script>
 
@@ -42,4 +44,5 @@ export default {
   display: inline-block;
   margin-bottom: 25px;
 }
+
 </style>
