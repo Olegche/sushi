@@ -10,6 +10,9 @@
 
     <div v-if="isVisible" class="container">
       <div v-if="getMyStoreCartLength > 0">
+        <div class="cartTitle">Корзина
+          <img src="@/assets/images/welcomeCartTitle.gif" alt="" />
+        </div>
         <table class="table">
           <tr>
             <th></th>
@@ -65,26 +68,31 @@
           </tr>
           <tr class="minOredr" v-if="getTotalPrice < 200">
             *мінімальне замовлення 200грн.
+             <b-progress type="is-warning" :value="getTotalPrice" :max="200" show-value></b-progress>
           </tr>
           <tr></tr>
         </table>
-        <div v-if="getUserIsCalculated">
+        <div class="showResultUser" v-if="getUserIsCalculated">
           <p v-if="getUserSex === 'man'">оскільки ви мужній Чоловік</p>
           <p v-if="getUserSex === 'wooman'">оскільки ви Прекрасна жінка</p>
           вагою {{ getUserWeight }} кг і зростом {{ getUserHeight }} см віком в
-          {{ getUserAge }} років рекомендована норма ККАЛ на день становить
-          {{ getUserResultIs }}
+          {{ getUserAge }} років - рекомендована норма ККАЛ на день становить
+          <span class="DigsUserResult"> {{ getUserResultIs }} </span>
 
-          <div class="toMatchSushi" v-if="getTotalCalories > getUserResultIs + 1000">
-              <h1>
-                  {{getTotalCalories}} ККАЛ  Не забагато? 
-                   <br>
-                    може оце все з'їсте на трьох?)
-              </h1>
-            
-            <img src="@/assets/images/toMutchSushi.gif" alt="">
-          </div>
+          
         </div>
+        <div
+            class="toMatchSushi"
+            v-if=" getUserIsCalculated && getTotalCalories > getUserResultIs + 1000"
+          >
+            <h1>
+              {{ getTotalCalories }} ККАЛ Не забагато?
+              <br />
+              може оце все з'їсте на трьох?)
+            </h1>
+
+            <img src="@/assets/images/toMutchSushi.gif" alt="" />
+          </div>
         <span class="mainDivCalculator">
           <calcu />
         </span>
@@ -330,6 +338,25 @@ export default {
 .container {
   padding: 100px;
 }
+.cartTitle {
+  font-size: 30px;
+  text-align: center;
+  background-color: #ffffff;
+  color: rgba(0, 0, 0, 0.5);
+ 
+  max-width: 500px;
+  max-height: 250px;
+  margin-bottom: 20px;
+  margin: auto;
+  border-radius: 9px;
+  
+}
+
+/* .cartTitle img {
+ max-width: 300px;
+ max-height: 150px;
+} */
+
 table {
   margin: 100px auto;
   border-radius: 3px;
@@ -347,12 +374,25 @@ table {
   font-size: 30px;
   margin: 10px;
   font-family: cursive;
-  color: mediumseagreen;
+  color: rgb(35, 209, 96);
 }
 .totalPriceAndCalories {
   color: rgb(255, 255, 255);
   font-size: 22px;
-  background-color: mediumseagreen;
+  background-color: rgb(35, 209, 96);
+}
+
+.showResultUser {
+  width: 270px;
+  text-align: center;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: rgb(121, 87, 213);
+  color: white;
+}
+.DigsUserResult {
+  color: rgb(252, 206, 24);
+  font-size: 20px;
 }
 
 .cart-image {
@@ -433,8 +473,8 @@ table {
   }
 }
 
-.toMatchSushi{
-    margin: 100px auto;
+.toMatchSushi {
+  margin: 10px auto;
   text-align: center;
   font-size: 30px;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
@@ -450,6 +490,24 @@ table {
   animation-delay: 0.5ms;
 }
 
+@media screen and (max-width: 768px) {
+.toMatchSushi  {
+  display: block;
+  padding: 10px;
+  max-width: 1000px;
+ margin: 10px auto;
+  text-align: center;
+  font-size: 20px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  background-color: rgb(137, 250, 99);
+  color: rgb(32, 26, 26);
+  
+}
+}
+
+
+
 @keyframes show {
   0% {
     opacity: 0;
@@ -458,6 +516,4 @@ table {
     opacity: 1;
   }
 }
-
-
 </style>

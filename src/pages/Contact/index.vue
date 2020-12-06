@@ -1,7 +1,7 @@
 <template>
     <div>
-Contact
-<a href="tel:+380679587995">0679587995</a>
+Contact <i class="fas fa-phone"></i>
+<a href="tel:+380679587995"> 0679587995</a>
 
 
     </div>

@@ -44,6 +44,16 @@
         is Vegan?
       </b-checkbox>
 
+<button   class="button is-warning">
+  
+                <b-icon
+                    pack="fas"
+                    icon="sync-alt"
+                    custom-class="fa-spin">
+                </b-icon>
+                
+                <span>Готово</span>
+            </button>
       <button @click="onAdd();toEdit()" >Додати</button>
     </div>
   </div>

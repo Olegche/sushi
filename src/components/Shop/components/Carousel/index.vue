@@ -1,12 +1,16 @@
 <template>
+
+
   <b-carousel  :autoplay="true" :arrow="arrow" :interval="interval" :pause-hover ="false">
-    >
+    
     <b-carousel-item class="is-medium" v-for="(item, i) in items" :key="i">
       <figure>
         <img :src="item.image" />
       </figure>
     </b-carousel-item>
   </b-carousel>
+  
+
 </template>
 
 <script>
@@ -44,5 +48,8 @@ export default {
     max-width: 1160;
     height: 554;
     text-align: center;
+}
+.h1 {
+  margin: 100px auto;
 }
 </style>

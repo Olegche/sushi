@@ -7,6 +7,8 @@ import router from "./ router";
 
 import firebase from 'firebase';
 import "./firebase-config";
+
+
 Vue.prototype.$firebase = firebase;
 
 Vue.config.productionTip = false

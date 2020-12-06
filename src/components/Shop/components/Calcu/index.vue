@@ -103,9 +103,10 @@ export default {
           (10 * this.weight + 6.25 * this.height - 5 * this.age - 161) * 1.3
         );
       } else this.resultIs = "2000";
+      setTimeout(() => this.showCalculator=false, 10000)
     },
     show() {
-      this.showCalculator = true;
+      this.showCalculator = !this.showCalculator;
     },
     hide() {
       this.showCalculator = false;
@@ -146,8 +147,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.mainDivCalculator{
+  margin-bottom: 10px;
+}
 .btnCalculatorShow {
-  background-color: limegreen;
+  background-color: rgb(35, 209, 96);
   border-radius: 20px;
   border-width: 0px;
   width: 30px;
@@ -163,7 +167,7 @@ export default {
   cursor: pointer;
 }
 .btnCalculatorResult {
-  background-color: rgba(233, 150, 122, 0.824);
+  background-color: rgb(35, 209, 96);
   border-radius: 7px;
   border-width: 0.1px;
   font-family: sans-serif;
@@ -186,6 +190,7 @@ export default {
   color: rgb(255, 255, 255);
   transition-duration: 1000ms;
   transition-timing-function: cubic-bezier(0.68, -0.95, 0.265, 1.55);
+  margin-bottom: 20px;
 }
 
 .btnCalculatorHide:hover {
@@ -194,6 +199,10 @@ export default {
 }
 
 .TotalCaloriesinCart {
-  background: rgb(248, 238, 182);
+  background: rgb(121, 87, 213);
+  color: white;
+  border-radius: 9px;
+  padding: 2px;
+  margin: 1px;
 }
 </style>

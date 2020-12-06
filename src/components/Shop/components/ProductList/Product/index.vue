@@ -15,7 +15,7 @@
       {{ category }}
       
     </div>
-    <button @click="onAdd"  class="btnAdd">в корзину</button>
+    <button @click="onAdd(), toast()"  class="btnAdd">в корзину</button>
     
   </div>
 </template>
@@ -63,7 +63,14 @@ export default {
 
     onAdd() {
       this.addToMyStoreCart(this.id)
-    }
+    },
+
+    toast() {
+                this.$buefy.toast.open({
+                    message: 'Додано в корзину',
+                    type: 'is-success'
+                })
+            },
       
     
   },

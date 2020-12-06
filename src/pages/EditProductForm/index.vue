@@ -23,6 +23,7 @@
       <img :src="product.img" alt="product.title" />
       <div>
         <button class="editButton" @click="onEdit(product.id)">edit</button>
+        
         <button class="delButton" @click="deleteFromBase(product.id)">delete</button>
       </div>
     </div>

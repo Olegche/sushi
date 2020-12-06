@@ -21,6 +21,7 @@
         спочатку дорожчі
       </b-button>
     </div>
+    
 
     <div class="mainDivCalculator">
       <calcu />
