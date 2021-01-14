@@ -4,6 +4,7 @@ import axios from "axios";
 // import firebase from "firebase";
 import apiEndpoints from "@/constans/apiEndpoints";
 import auth from "./modules/auth";
+import orders from "./modules/orders";
 
 Vue.use(Vuex)
 
@@ -583,6 +584,7 @@ const store = new Vuex.Store({
   modules: {
     
     auth,
+    orders
   },
 
 

@@ -9,6 +9,7 @@ import Cart from "./pages/Cart";
 import addProductForm from "./pages/addProductForm"
 import EditProductForm from "./pages/EditProductForm"
 
+
 import Login from "./components/Shop/components/Login";
 import Signup from "./components/Shop/components/Signup";
 import store from "./store";
@@ -87,7 +88,7 @@ const router = new VueRouter (
   router.beforeEach((to, from, next) => {
     let check =
       !store.getters["auth/isAuthenticated"]() &&
-      !["/login", "/signup", "/", "/cart", "/delivery", "/delivery","/about","/contact" ].includes(to.path);
+      !["/login", "/signup", "/", "/cart", "/delivery", "/delivery","/about","/contact","/orders/add","/orders","/cart/orders/add" ].includes(to.path);
   
     if (check) {
       // Недопускаємо до захищених роутів, якщо немає токена

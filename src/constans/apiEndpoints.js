@@ -8,6 +8,11 @@ export default {
     user: {
         signup:`${process.env.VUE_APP_API_URL}/users/signup`,
         login:`${process.env.VUE_APP_API_URL}/users/login`
-    }
+    },
+    orders: {
+      read: `${process.env.VUE_APP_API_URL}/orders`,
+      add: `${process.env.VUE_APP_API_URL}/orders/add`,
+      
+    },
 
   };

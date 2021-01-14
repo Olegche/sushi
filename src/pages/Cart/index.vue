@@ -10,7 +10,8 @@
 
     <div v-if="isVisible" class="container">
       <div v-if="getMyStoreCartLength > 0">
-        <div class="cartTitle">Корзина
+        <div class="cartTitle">
+          Корзина
           <img src="@/assets/images/welcomeCartTitle.gif" alt="" />
         </div>
         <table class="table">
@@ -68,9 +69,15 @@
           </tr>
           <tr class="minOredr" v-if="getTotalPrice < 200">
             *мінімальне замовлення 200грн.
-             <b-progress type="is-warning" :value="getTotalPrice" :max="200"  show-value style="margin: 9px">
-                {{getTotalPrice}}/200</b-progress>
-               
+            <b-progress
+              type="is-warning"
+              :value="getTotalPrice"
+              :max="200"
+              show-value
+              style="margin: 9px"
+            >
+              {{ getTotalPrice }}/200</b-progress
+            >
           </tr>
           <tr></tr>
         </table>
@@ -80,21 +87,21 @@
           вагою {{ getUserWeight }} кг і зростом {{ getUserHeight }} см віком в
           {{ getUserAge }} років - рекомендована норма ККАЛ на день становить
           <span class="DigsUserResult"> {{ getUserResultIs }} </span>
-
-          
         </div>
         <div
-            class="toMatchSushi"
-            v-if=" getUserIsCalculated && getTotalCalories > getUserResultIs + 1000"
-          >
-            <h1>
-              {{ getTotalCalories }} ККАЛ Не забагато?
-              <br />
-              може оце все з'їсте на трьох?)
-            </h1>
+          class="toMatchSushi"
+          v-if="
+            getUserIsCalculated && getTotalCalories > getUserResultIs + 1000
+          "
+        >
+          <h1>
+            {{ getTotalCalories }} ККАЛ Не забагато?
+            <br />
+            може оце все з'їсте на трьох?)
+          </h1>
 
-            <img src="@/assets/images/toMutchSushi.gif" alt="" />
-          </div>
+          <img src="@/assets/images/toMutchSushi.gif" alt="" />
+        </div>
         <span class="mainDivCalculator">
           <calcu />
         </span>
@@ -142,6 +149,8 @@
         <b-input v-model="flat" type="number" :min="1" :max="1000"></b-input>
       </b-field>
 
+     
+
       <div>
         <b-checkbox
           v-model="dontRingTheDoor"
@@ -165,7 +174,7 @@
       <div>
         <b-field
           label="Побажання до замовлення "
-          :label-position="labelPosition"
+          
         >
           <b-input v-model="wishes" maxlength="200" type="textarea"></b-input>
         </b-field>
@@ -183,8 +192,9 @@
     <div class="acceptCard" v-if="accept">
       <table>
         <tr>
+          <th></th>
           <th>Замовлення прийняте !</th>
-          <th>{{ new Date() }}</th>
+          
         </tr>
         <tr>
           <th>Ім'я</th>
@@ -205,7 +215,7 @@
         </tr>
 
         <tr>
-          <th>дом</th>
+          <th>будинок</th>
           <td>{{ house }}</td>
         </tr>
         <tr>
@@ -233,12 +243,17 @@
 
         <tr v-for="product in getMyStoreCart" :key="product.id">
           <td>{{ product.title }}</td>
-          <td>{{ product.count }} шт.</td>
-          <td>{{ product.price }}</td>
+          <td>{{ product.count }} шт./ціна {{ product.price }}</td>
         </tr>
         <tr>
+          <td>замовлено в</td>
+          <td>{{new Date()}}</td>
+        </tr>
+        
+
+        <tr>
           <th>всього</th>
-          <th>{{ getTotalPrice }}</th>
+          <th class="total-order-price">{{ getTotalPrice }}</th>
         </tr>
       </table>
     </div>
@@ -284,13 +299,20 @@ export default {
       res = res.reduce((a, b) => a + b);
       return res;
     },
+
+    getOrderedProducts() {   
+        let products = [];
+        for (let product of this.getMyStoreCart) {
+          products.push(product.title, product.count, product.price);
+        }
+        return products;
+    },
   },
 
   data() {
     return {
       isVisible: true,
       isOrder: false,
-      labelPosition: "on-border",
       userName: "",
       tel: "",
       city: "",
@@ -302,18 +324,21 @@ export default {
       leftAtDoor: false,
       wishes: "",
       accept: false,
+      
+      
     };
   },
 
   methods: {
     ...mapActions(["removeFromCart", "addToMyStoreCart", "decrementCart"]),
+    ...mapActions('orders', ["addOrder"]),
 
     deleteFromCart(index) {
       this.removeFromCart(index);
     },
 
     addProduct(_id) {
-      console.log('111111111111');
+      console.log("111111111111");
       this.addToMyStoreCart(_id);
     },
 
@@ -329,6 +354,23 @@ export default {
     },
 
     acceptAll() {
+      this.addOrder({
+       
+      userName: this.userName,
+      tel: this.tel,
+      city: this.city,
+      street: this.street,
+      house:this.house,
+      entrance: this.entrance,
+      flat: this.flat,
+      dontRingTheDoor: this.dontRingTheDoor,
+      leftAtDoor: this.leftAtDoor,
+      wishes: this.wishes,
+      date: new Date(),
+      products: this.getOrderedProducts,
+      totalPrice: this.getTotalPrice
+      
+      })
       this.accept = true;
       this.isOrder = false;
       this.isVisible = false;
@@ -346,13 +388,12 @@ export default {
   text-align: center;
   background-color: #ffffff;
   color: rgba(0, 0, 0, 0.5);
- 
+
   max-width: 500px;
   max-height: 250px;
   margin-bottom: 20px;
   margin: auto;
   border-radius: 9px;
-  
 }
 
 /* .cartTitle img {
@@ -371,6 +412,10 @@ table {
   border: 2px solid rgb(206, 202, 202);
   font-size: 20px;
   padding: 1px;
+}
+
+.total-order-price {
+  color: red;
 }
 
 .table td span {
@@ -439,6 +484,7 @@ table {
   border: 1px solid rgb(7, 7, 6);
   padding: 1px;
 }
+
 .mainDivCalculator {
   display: block;
   text-align: center;
@@ -495,22 +541,19 @@ table {
 }
 
 @media screen and (max-width: 768px) {
-.toMatchSushi  {
-  display: block;
-  padding: 10px;
-  max-width: 1000px;
- margin: 10px auto;
-  text-align: center;
-  font-size: 20px;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  background-color: rgb(137, 250, 99);
-  color: rgb(32, 26, 26);
-  
+  .toMatchSushi {
+    display: block;
+    padding: 10px;
+    max-width: 1000px;
+    margin: 10px auto;
+    text-align: center;
+    font-size: 20px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    background-color: rgb(137, 250, 99);
+    color: rgb(32, 26, 26);
+  }
 }
-}
-
-
 
 @keyframes show {
   0% {

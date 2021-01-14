@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="logo">
+       <br>
       <p class="phone">
-        <b>one call and</b>
+        
 
-        ...have your tasty right now <a href="tel:+380679587995">0679587995</a>
+        Натисніть щоб позвонити <a href="tel:+380679587995">0679587995</a>
       </p>
       <img src="@/assets/images/sushi2.gif" alt="logo" class="imglog" />
     </div>
