@@ -1,4 +1,5 @@
 <template>
+
   <b-navbar>
     <template slot="brand">
       <b-navbar-item tag="router-link" :to="{ path: '/' }">
@@ -15,22 +16,42 @@
       <b-navbar-item tag="router-link" :to="{ path: '/delivery' }">
         Доставка
       </b-navbar-item>
-    
+
       <b-navbar-dropdown label="Детальна інформація">
         <b-navbar-item tag="router-link" :to="{ path: '/about' }">
           Ми
         </b-navbar-item>
+
         <b-navbar-item tag="router-link" :to="{ path: '/contact' }">
           Контакти
         </b-navbar-item>
+      </b-navbar-dropdown>
+      <b-navbar-dropdown
+        v-if="isAuthenticated()"
+        label="Сторінка адміністратора"
+      >
         <b-navbar-item tag="router-link" :to="{ path: '/addProductForm/new' }">
-          add product
+          Додати продукт на сайт
         </b-navbar-item>
-        <b-navbar-item tag="router-link" :to="{ path: '/editProductForm' }">
-          edit product
+        <b-navbar-item
+          tag="router-link"
+          v-if="isAuthenticated()"
+          :to="{ path: '/editProductForm' }"
+        >
+          Редагувати продукти
         </b-navbar-item>
       </b-navbar-dropdown>
+      <b-navbar-item>
+        <b-icon v-if="userNick "
+              icon="mdi mdi-account-check"
+              size="is-large"
+              type="is-success"
+            >
+            </b-icon>
+         {{   userNick }}
+      </b-navbar-item>
 
+      <!-- 
       <div class="wrapper" v-if="signUpBtn">
         <button class="btnCloseForm" @click="closeLoginForm">x</button>
 
@@ -96,33 +117,56 @@
             <b-button type="is-success">Login</b-button>
           </b-field>
         </div>
-      </div>
+      </div> -->
     </template>
 
     <template slot="end">
       <b-navbar-item tag="div">
-          <b-navbar-item tag="router-link" :to="{ path: '/cart' }">
-        <img src="@/assets/images/cartImage.png" alt="">  <span v-if="getMyStoreCartLength > 0" class="navbarCartLength"> {{ getMyStoreCartLength }} </span> 
-      </b-navbar-item>
-        <div class="buttons">
-          <a class="button is-primary" @click="signUp">
+        <b-navbar-item tag="router-link" :to="{ path: '/cart' }">
+          <!-- <img src="@/assets/images/cartImage.png" alt="">  -->
+          <b-icon icon="mdi mdi-cart-outline" size="is-large" type="is-success">
+          </b-icon>
+          <span v-if="getMyStoreCartLength > 0" class="navbarCartLength">
+            {{ getMyStoreCartLength }}
+          </span>
+        </b-navbar-item>
+        <b-navbar-dropdown label="admin">
+          <div class="buttons">
+            <b-icon
+              icon="mdi mdi-account-key"
+              size="is-large"
+              type="is-success"
+            >
+            </b-icon>
+
+            <!-- <a class="button is-primary" @click="signUp">
             <strong>Sign up</strong>
-          </a>
-          <a class="button is-light" @click="loginUp"> Log in </a>
-        </div>
+          </a> -->
+            <!-- <a class="button is-light" @click="loginUp"> Log in </a> -->
+
+            <router-link to="/login" class="button is-light">Login</router-link>
+            <router-link to="/signup" class="button is-primary"
+              >Sign up</router-link
+            >
+            <div class="button is-danger" @click="onLogout">Logout</div>
+          </div>
+        </b-navbar-dropdown>
       </b-navbar-item>
     </template>
   </b-navbar>
+
+  
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Navbar",
 
   computed: {
-    ...mapGetters(["getMyStoreCartLength"]),
+    ...mapGetters("auth", ["isAuthenticated", "userNick"]),
+    ...mapGetters(["getMyStoreCartLength"]), ///  дублюю . як передати в мепгеттер екшин з модуля і екшн з стора?
   },
 
   data() {
@@ -133,17 +177,10 @@ export default {
   },
 
   methods: {
-    signUp() {
-      this.signUpBtn = true;
-      this.login = false;
-    },
-    loginUp() {
-      this.signUpBtn = false;
-      this.login = true;
-    },
-    closeLoginForm() {
-      this.signUpBtn = false;
-      this.login = false;
+    ...mapActions("auth", ["logout"]),
+    onLogout() {
+      this.logout();
+      this.$router.push({ path: "/login" });
     },
   },
 };
@@ -193,17 +230,19 @@ export default {
   color: white;
   border-width: 0px;
 }
-.navbarCartLength{
-    margin-left: 3px;
-    color:rgb(17, 17, 15);
-    font-size: 20px;
-    border-radius: 100px;
-    font-weight: bold;
-    background-color: gold;
-    padding: 3px;
-    
-    
-   
-    
+.navbarCartLength {
+  margin-left: 3px;
+  color: rgb(17, 17, 15);
+  font-size: 20px;
+  border-radius: 100px;
+  font-weight: bold;
+  background-color: gold;
+  padding: 3px;
 }
+
+.buttons {
+  margin: 3px;
+}
+
+
 </style>

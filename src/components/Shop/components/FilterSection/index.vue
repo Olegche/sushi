@@ -159,8 +159,8 @@ export default {
   margin-left: 7px;
   margin-right: 10px;
   position: sticky;
-  top: 3em;
-  z-index: 99999;
+  top: 5em;
+  
 }
 .container div {
   display: block;

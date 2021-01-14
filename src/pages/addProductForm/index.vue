@@ -44,17 +44,17 @@
         is Vegan?
       </b-checkbox>
 
-<button   class="button is-warning">
-  
-                <b-icon
-                    pack="fas"
-                    icon="sync-alt"
-                    custom-class="fa-spin">
-                </b-icon>
-                
-                <span>Готово</span>
-            </button>
-      <button @click="onAdd();toEdit()" >Додати</button>
+      <button
+        @click="
+          onAdd();
+          toEdit();
+        "
+        class="button is-warning"
+      >
+        <b-icon pack="fas" icon="sync-alt" custom-class="fa-spin"> </b-icon>
+
+        <span>Готово</span>
+      </button>
     </div>
   </div>
 </template>
@@ -88,33 +88,28 @@ export default {
     ...mapActions(["addProduct", "updateProduct"]),
 
     onAdd() {
-      const { title, price, img, calories, category, isVegan } = this;
+      
       //Крок 5. Використовуємо1 функцію-action
       if (!this.productId)
         this.addProduct({
-          self: this,
-          productData: {
-            title,
-            price,
-            img,
-            calories,
-            category,
-            isVegan,
-          },
-        });
+        title: this.title,
+        price: this.price,
+        img: this.img,
+        calories: this.calories,
+        category: this.category,
+        isVegan: this.isVegan
+      });
       else
         this.updateProduct({
-          self: this,
-          productData: {
-            id: this.productId,
-            title,
-            price,
-            img,
-            calories,
-            category,
-            isVegan,
-          },
-        });
+        _id: this.productId,
+        title: this.title,
+        price: this.price,
+        img: this.img,
+        calories: this.calories,
+        category: this.category,
+        isVegan: this.isVegan
+          }
+        );
     },
     toEdit(){
        this.$router.push({

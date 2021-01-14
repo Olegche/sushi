@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import firebase from "firebase";
-
+import axios from "axios";
+// import firebase from "firebase";
+import apiEndpoints from "@/constans/apiEndpoints";
+import auth from "./modules/auth";
 
 Vue.use(Vuex)
 
@@ -237,7 +239,7 @@ const store = new Vuex.Store({
 
     ],
 
-    userCalories: {
+    userData: {
       sex: "man",
       weight: 40,
       height: 140,
@@ -246,8 +248,7 @@ const store = new Vuex.Store({
       isCalculated: "",
     },
 
-    categoriesList: [
-      {
+    categoriesList: [{
         id: "",
         title: "Усі страви",
       },
@@ -285,33 +286,34 @@ const store = new Vuex.Store({
       state.myStoreProducts = [...data];
     },
 
-    addProductToMyStoreCart(state, id) {
-      const product = state.MyStoreCart.find((item) => item.id === id)
+    addProductToMyStoreCart(state, _id) {
+      const product = state.MyStoreCart.find((item) => item._id === _id)
+      console.log(`${_id} from mut addProductToMyStoreCart`);
       if (product) product.count++
       else
         state.MyStoreCart.push({
-          id,
+          _id,
           count: 1,
         })
     },
 
     setUserSex(state, sex) {
-      state.userCalories.sex = sex
+      state.userData.sex = sex
     },
     setUserWeight(state, weight) {
-      state.userCalories.weight = weight
+      state.userData.weight = weight
     },
     setUserHeight(state, height) {
-      state.userCalories.height = height
+      state.userData.height = height
     },
     setUserAge(state, age) {
-      state.userCalories.age = age
+      state.userData.age = age
     },
     setUserResultIs(state, resultIs) {
-      state.userCalories.resultIs = resultIs
+      state.userData.resultIs = resultIs
     },
     setUserIsCalculated(state, isCalculated) {
-      state.userCalories.isCalculated = isCalculated
+      state.userData.isCalculated = isCalculated
     },
 
 
@@ -321,99 +323,172 @@ const store = new Vuex.Store({
     },
 
     decrementCart(state, id) {
-      const product = state.MyStoreCart.find((item) => item.id === id)
+      const product = state.MyStoreCart.find((item) => item._id === id)
       product.count--
       if (product.count < 1)
         product.count = 1
 
-    }
+    },
+
+    addProductToList(state, product) {
+      state.myStoreProducts.push(product);
+    },
 
   },
 
   actions: {
-    loadData({ commit }) { // add 
-      const db = firebase.firestore();
-      db.collection("myStoreProducts")
-        .get()
-        .then((snap) => {
-          const myStoreProducts = [];
-          snap.forEach((doc) => {
-            myStoreProducts.push({ id: doc.id, ...doc.data() });
-          });
-          commit("setMyStoreProducts", myStoreProducts);
+    loadData({
+      commit
+    }) {
+      axios.get(apiEndpoints.products.read)
+        .then((res) => res.data)
+
+        .then((resData) => {
+          if (resData) {
+            commit("setMyStoreProducts", resData);
+          }
         })
-      },
+    },
 
-      addProduct({ dispatch }, { productData }) {
-  
-        const db = firebase.firestore();
-  
-       
-        db.collection("myStoreProducts")
-          .doc()
-          .set({
-            title: productData.title,
-            price: productData.price,
-            img: productData.img,
-            category: productData.category,
-            calories: productData.calories,
-            isVegan: productData.isVegan,
+    addProduct({
+       dispatch
+    }, productData) {
 
-          })
-          .then(function() {
-            console.log("Document successfully written!");
-            dispatch("loadData");
-          })
-          .catch(function(error) {
-            console.error("Error writing document: ", error);
-          });
-      },
+      axios
+        .post(apiEndpoints.products.add, productData)
+        .then(
+          //Якщо добре
+          (res) => res.data,
 
-      updateProduct({ dispatch }, { productData }) {
+        )
+
+        .then((resData) => {
+         console.log('ok');
+          if (resData) dispatch('loadData')
+          else throw new Error("Fatch failed!");
+        })
+        .catch((err) => { //Якщо погано
+          console.log(` tut eror:  @@@@ ${err}`);
+        })
+
+    },
+    //////
+    updateProduct({
+      dispatch
+    }, productData) {
+
+      axios
+        .put(apiEndpoints.products.update, productData)
+        .then(
+          //Якщо добре
+          (res) => res.data,
+        )
+        .then((resData) => {
+          console.log(`resdata  $$$ ${resData}`);
+          if (resData) dispatch('loadData')
+          else throw new Error("Fatch failed!");
+        })
+        
+
+    },
+    deleteProduct({ dispatch }, _id) {
       
-      const db = firebase.firestore();
-  
-  
-      db.collection("myStoreProducts")
-        .doc(productData.id)
-        .set({
-          title: productData.title,
-          price: productData.price,
-          img: productData.img,
-          category: productData.category,
-          calories: productData.calories,
-          isVegan: productData.isVegan,
-
+      console.log("id");
+      console.log(_id);
+      // axios.delete(apiEndpoints.products.delete,{params:{id}})    //через params, тоді на сервері берем з req.query.id
+      axios.delete(apiEndpoints.products.delete, { data: { _id } }) //через data, тоді на сервері берем з req.body.id        
+        .then(                             //Якщо добре
+          res => res.data
+        )
+        .then((resData) => {
+          if(resData.success)   dispatch ('loadData')
+          else throw new Error('Fatch failed!')
         })
-        .then(function() {
-          console.log("Document successfully written!");
-          dispatch("loadData");
-        })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
+        
     },
+    /////////
 
-    deleteProduct({ dispatch }, productId) {
-      // commit("addProductToList", productData);
-      const db = firebase.firestore();
-      // Change a document in collection
-      db.collection("myStoreProducts")
-        .doc(productId)
-        .delete()
-        .then(function() {
-          console.log("Document successfully del!");
-          dispatch("loadData");
-        })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
-    },
+    // addProduct({
+    //   dispatch
+    // }, {
+    //   productData
+    // }) {
+
+    //   const db = firebase.firestore();
+
+
+    //   db.collection("myStoreProducts")
+    //     .doc()
+    //     .set({
+    //       title: productData.title,
+    //       price: productData.price,
+    //       img: productData.img,
+    //       category: productData.category,
+    //       calories: productData.calories,
+    //       isVegan: productData.isVegan,
+
+    //     })
+    //     .then(function () {
+    //       console.log("Document successfully written!");
+    //       dispatch("loadData");
+    //     })
+    //     .catch(function (error) {
+    //       console.error("Error writing document: ", error);
+    //     });
+    // },
+
+    // updateProduct({
+    //   dispatch
+    // }, {
+    //   productData
+    // }) {
+
+    //   const db = firebase.firestore();
+
+
+    //   db.collection("myStoreProducts")
+    //     .doc(productData.id)
+    //     .set({
+    //       title: productData.title,
+    //       price: productData.price,
+    //       img: productData.img,
+    //       category: productData.category,
+    //       calories: productData.calories,
+    //       isVegan: productData.isVegan,
+
+    //     })
+    //     .then(function () {
+    //       console.log("Document successfully written!");
+    //       dispatch("loadData");
+    //     })
+    //     .catch(function (error) {
+    //       console.error("Error writing document: ", error);
+    //     });
+    // },
+
+    // deleteProduct({
+    //   dispatch
+    // }, productId) {
+    //   // commit("addProductToList", productData);
+    //   const db = firebase.firestore();
+    //   // Change a document in collection
+    //   db.collection("myStoreProducts")
+    //     .doc(productId)
+    //     .delete()
+    //     .then(function () {
+    //       console.log("Document successfully del!");
+    //       dispatch("loadData");
+    //     })
+    //     .catch(function (error) {
+    //       console.error("Error writing document: ", error);
+    //     });
+    // },
 
     addToMyStoreCart({
       commit
-    }, id) {
-      commit('addProductToMyStoreCart', id)
+    }, _id) {
+      console.log(`${_id} from act addToMyStoreCart`);
+      commit('addProductToMyStoreCart', _id)
     },
 
     setUserSex({
@@ -444,7 +519,7 @@ const store = new Vuex.Store({
     setUserIsCalculated({
       commit
     }, isCalculated) {
-      commit ('setUserIsCalculated', isCalculated)
+      commit('setUserIsCalculated', isCalculated)
     },
 
 
@@ -457,8 +532,8 @@ const store = new Vuex.Store({
 
     decrementCart({
       commit
-    }, id) {
-      commit('decrementCart', id)
+    }, _id) {
+      commit('decrementCart', _id)
     }
 
   },
@@ -472,7 +547,8 @@ const store = new Vuex.Store({
     getMyStoreCart: (state) => {
       const arr = []
       state.myStoreProducts.forEach((product) => {
-        const productObj = state.MyStoreCart.find((item) => item.id == product.id)
+        const productObj = state.MyStoreCart.find((item) => item._id === product._id)
+        console.log(`${product._id} from getMyStoreCart`);
         if (productObj) {
           arr.push({
             ...product,
@@ -484,23 +560,30 @@ const store = new Vuex.Store({
     },
 
     getProductById: (state) => (id) => {
-      return state.myStoreProducts.find((item) => item.id == id);
+      return state.myStoreProducts.find((item) => item._id === id)
+
+
+
     },
 
- 
+
     myProducts: (state) => state.myStoreProducts,
 
     getCategoryList: (state) => state.categoriesList,
 
-    getUserSex: (state) => state.userCalories.sex,
-    getUserWeight: (state) => state.userCalories.weight,
-    getUserHeight: (state) => state.userCalories.height,
-    getUserAge: (state) => state.userCalories.age,
-    getUserResultIs: (state) => state.userCalories.resultIs,
-    getUserIsCalculated: (state) => state.userCalories.isCalculated
+    getUserSex: (state) => state.userData.sex,
+    getUserWeight: (state) => state.userData.weight,
+    getUserHeight: (state) => state.userData.height,
+    getUserAge: (state) => state.userData.age,
+    getUserResultIs: (state) => state.userData.resultIs,
+    getUserIsCalculated: (state) => state.userData.isCalculated
 
 
-  }
+  },
+  modules: {
+    
+    auth,
+  },
 
 
 })

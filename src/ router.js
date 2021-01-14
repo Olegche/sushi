@@ -9,6 +9,10 @@ import Cart from "./pages/Cart";
 import addProductForm from "./pages/addProductForm"
 import EditProductForm from "./pages/EditProductForm"
 
+import Login from "./components/Shop/components/Login";
+import Signup from "./components/Shop/components/Signup";
+import store from "./store";
+
 
 Vue.use(VueRouter);
 
@@ -44,6 +48,7 @@ const routes = [
         component : addProductForm
         
     },
+    
     {
         path: "/addProductForm/:product_id",
         name: "addProductForms",
@@ -57,6 +62,17 @@ const routes = [
         
     },
 
+    {
+        path: "/login",
+        name: "Login",
+        component : Login
+    },
+    {
+        path: "/signup",
+        name: "Signup",
+        component : Signup
+    }
+
 ]
 
 const router = new VueRouter (
@@ -65,5 +81,22 @@ const router = new VueRouter (
         routes
     }
 )
+
+
+  
+  router.beforeEach((to, from, next) => {
+    let check =
+      !store.getters["auth/isAuthenticated"]() &&
+      !["/login", "/signup", "/", "/cart", "/delivery", "/delivery","/about","/contact" ].includes(to.path);
+  
+    if (check) {
+      // Недопускаємо до захищених роутів, якщо немає токена
+  
+      next({ path: "/login" });
+      return;
+    } else {
+      next();
+    }
+  });
 
 export default router

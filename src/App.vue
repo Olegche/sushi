@@ -1,32 +1,27 @@
 <template>
   <div id="app">
+    <navbar />
     
-   <navbar/>
-
-   <router-view>
-
-     </router-view>
+    <router-view> </router-view>
     <!-- <store/> -->
-    
-    
-   
   </div>
 </template>
 
 <script>
-
 // import Store from "./components/Store";
-import  Navbar  from "./components/Shop/components/Navbar";
+import Navbar from "./components/Shop/components/Navbar";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     // Store,
-    Navbar
+    Navbar,
   },
+ 
 
-  
-}
+
+ 
+};
 </script>
 
 <style>
@@ -38,4 +33,6 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+
 </style>

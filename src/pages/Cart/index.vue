@@ -23,14 +23,14 @@
             <th>Ціна</th>
             <th></th>
           </tr>
-          <tr v-for="(product, index) in getMyStoreCart" :key="product.id">
+          <tr v-for="(product, index) in getMyStoreCart" :key="product._id">
             <td>
               {{ index + 1 }}
             </td>
             <td>
-              <span @click="minusProduct(product.id)">-</span>
+              <span @click="minusProduct(product._id)">-</span>
               {{ product.count }}
-              <span @click="addProduct(product.id)">+</span>
+              <span @click="addProduct(product._id)">+</span>
             </td>
 
             <td>
@@ -68,7 +68,9 @@
           </tr>
           <tr class="minOredr" v-if="getTotalPrice < 200">
             *мінімальне замовлення 200грн.
-             <b-progress type="is-warning" :value="getTotalPrice" :max="200" show-value></b-progress>
+             <b-progress type="is-warning" :value="getTotalPrice" :max="200"  show-value style="margin: 9px">
+                {{getTotalPrice}}/200</b-progress>
+               
           </tr>
           <tr></tr>
         </table>
@@ -103,7 +105,7 @@
 
     <div class="orderField" v-if="isOrder">
       <b-field label="* Ім'я:">
-        <b-input required v-model="costumerName"></b-input>
+        <b-input required v-model="userName"></b-input>
       </b-field>
 
       <b-field label="* Телефон">
@@ -133,7 +135,7 @@
       </b-field>
 
       <b-field label="Під'їзд:">
-        <b-input v-model="entance" type="number" :min="1" :max="20"></b-input>
+        <b-input v-model="entrance" type="number" :min="1" :max="20"></b-input>
       </b-field>
 
       <b-field label="Квартира:">
@@ -142,7 +144,7 @@
 
       <div>
         <b-checkbox
-          v-model="dontRingDore"
+          v-model="dontRingTheDoor"
           size="is-middle"
           :value="false"
           type="is-danger"
@@ -151,7 +153,7 @@
         </b-checkbox>
         <br />
         <b-checkbox
-          v-model="leaveOrderAtDore"
+          v-model="leftAtDoor"
           size="is-middle"
           :value="false"
           type="is-danger"
@@ -165,12 +167,12 @@
           label="Побажання до замовлення "
           :label-position="labelPosition"
         >
-          <b-input v-model="wishList" maxlength="200" type="textarea"></b-input>
+          <b-input v-model="wishes" maxlength="200" type="textarea"></b-input>
         </b-field>
       </div>
 
       <b-button
-        v-if="costumerName && tel && city && house && street"
+        v-if="userName && tel && city && house && street"
         @click="acceptAll"
         type="is-success"
         size="is-large"
@@ -186,7 +188,7 @@
         </tr>
         <tr>
           <th>Ім'я</th>
-          <td>{{ costumerName }}</td>
+          <td>{{ userName }}</td>
         </tr>
         <tr>
           <th>тел</th>
@@ -208,7 +210,7 @@
         </tr>
         <tr>
           <th>під'їзд</th>
-          <td>{{ entance }}</td>
+          <td>{{ entrance }}</td>
         </tr>
         <tr>
           <th>кв</th>
@@ -216,16 +218,16 @@
         </tr>
         <tr>
           <th>не дзвонити в двері?</th>
-          <td>{{ dontRingDore }}</td>
+          <td>{{ dontRingTheDoor }}</td>
         </tr>
         <tr>
           <th>залишити під дверима?</th>
-          <td>{{ leaveOrderAtDore }}</td>
+          <td>{{ leftAtDoor }}</td>
         </tr>
         <tr>
           <th>кометарі</th>
           <td>
-            {{ wishList }}
+            {{ wishes }}
           </td>
         </tr>
 
@@ -289,16 +291,16 @@ export default {
       isVisible: true,
       isOrder: false,
       labelPosition: "on-border",
-      costumerName: "",
+      userName: "",
       tel: "",
       city: "",
       street: "",
       house: "",
-      entance: "",
+      entrance: "",
       flat: "",
-      dontRingDore: false,
-      leaveOrderAtDore: false,
-      wishList: "",
+      dontRingTheDoor: false,
+      leftAtDoor: false,
+      wishes: "",
       accept: false,
     };
   },
@@ -310,12 +312,13 @@ export default {
       this.removeFromCart(index);
     },
 
-    addProduct(id) {
-      this.addToMyStoreCart(id);
+    addProduct(_id) {
+      console.log('111111111111');
+      this.addToMyStoreCart(_id);
     },
 
-    minusProduct(id) {
-      this.decrementCart(id);
+    minusProduct(_id) {
+      this.decrementCart(_id);
     },
 
     GetOrder() {
@@ -367,6 +370,7 @@ table {
 .table td {
   border: 2px solid rgb(206, 202, 202);
   font-size: 20px;
+  padding: 1px;
 }
 
 .table td span {

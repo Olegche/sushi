@@ -6,8 +6,8 @@
       <product
         class="tile"
         v-for="item in products"
-        :key="item.id"
-        :id="item.id"
+        :key="item._id"
+        :_id="item._id"
         :img="item.img"
         :title="item.title"
         :price="item.price"

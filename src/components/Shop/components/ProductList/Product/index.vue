@@ -27,7 +27,7 @@ export default {
   name: "Product",
 
   props: {
-    id:{
+    _id:{
       type: [String, Number],
       default: null,
     },
@@ -62,7 +62,7 @@ export default {
     ...mapActions(['addToMyStoreCart']), 
 
     onAdd() {
-      this.addToMyStoreCart(this.id)
+      this.addToMyStoreCart(this._id)
     },
 
     toast() {

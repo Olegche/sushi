@@ -2,12 +2,12 @@
   <div>
     <div
       v-for="product in myProducts"
-      :key="product.id"
+      :key="product._id"
       class="productListEdit"
     >
       id:
       <div>
-        {{ product.id }}
+        {{ product._id }}
       </div>
       <div>
         {{ product.title }}
@@ -22,12 +22,13 @@
 
       <img :src="product.img" alt="product.title" />
       <div>
-        <button class="editButton" @click="onEdit(product.id)">edit</button>
-        
-        <button class="delButton" @click="deleteFromBase(product.id)">delete</button>
+        <button class="editButton" @click="onEdit(product._id)">edit</button>
+
+        <button class="delButton" @click="deleteFromBase(product._id)">
+          delete
+        </button>
       </div>
     </div>
-   
   </div>
 </template>
 
@@ -41,29 +42,32 @@ export default {
   },
 
   data() {
-      return {
-          confirmDeleteShow: false
-      }
+    return {
+      confirmDeleteShow: false,
+    };
   },
 
   methods: {
-    ...mapActions(["deleteProduct"]),
+    ...mapActions(["deleteProduct", "loadData"]),
 
-    onEdit(id) {
+    onEdit(_id) {
       this.$router.push({
         name: "addProductForms",
-        params: { product_id: id },
+        params: { product_id: _id },
       });
+      console.log(`${_id} onEdit `);
     },
 
-    deleteFromBase(productId) {
-        this.deleteProduct(productId)
-    }
+    deleteFromBase(_id) {
+      
+      this.deleteProduct(_id);
+      
+    },
   },
-showDeleteForm() {
-    this.confirmDeleteShow = true
-}
 
+  mounted() {
+    this.loadData();
+  },
 };
 </script>
 
@@ -93,13 +97,13 @@ showDeleteForm() {
   cursor: pointer;
   margin: 3px;
 }
-.editButton:hover{
-background-color:  rgb(250, 227, 99);
-color: darkgreen
+.editButton:hover {
+  background-color: rgb(250, 227, 99);
+  color: darkgreen;
 }
 
-.delButton:hover{
-background-color:  rgb(255, 97, 97);
-color: rgb(245, 247, 229)
+.delButton:hover {
+  background-color: rgb(255, 97, 97);
+  color: rgb(245, 247, 229);
 }
 </style>
