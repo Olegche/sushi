@@ -1,6 +1,8 @@
 <template>
   <div>
+    <br>
     <div class="emptyCartShow" v-if="getMyStoreCartLength < 1">
+     
       <h1>
         В корзині пусто! <br />
         Поверніться на <a href="/">головну</a> і замовте смачні суші!
@@ -303,7 +305,7 @@ export default {
     getOrderedProducts() {   
         let products = [];
         for (let product of this.getMyStoreCart) {
-          products.push(product.title, product.count, product.price);
+          products.push(`назва: ${product.title} кількість: ${product.count} ціна за шт: ${product.price}` );
         }
         return products;
     },
@@ -368,7 +370,8 @@ export default {
       wishes: this.wishes,
       date: new Date(),
       products: this.getOrderedProducts,
-      totalPrice: this.getTotalPrice
+      totalPrice: this.getTotalPrice,
+      statusOrder: false
       
       })
       this.accept = true;

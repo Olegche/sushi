@@ -1,5 +1,6 @@
 <template>
   <div>
+    <br>
     <h1>Про нас</h1>
     <b-carousel
       :autoplay="true"

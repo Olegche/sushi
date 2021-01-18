@@ -12,6 +12,7 @@ export default {
     orders: {
       read: `${process.env.VUE_APP_API_URL}/orders`,
       add: `${process.env.VUE_APP_API_URL}/orders/add`,
+      update: `${process.env.VUE_APP_API_URL}/orders/update`,
       
     },
 

@@ -8,7 +8,7 @@ import Delivery from "./pages/Delivery";
 import Cart from "./pages/Cart";
 import addProductForm from "./pages/addProductForm"
 import EditProductForm from "./pages/EditProductForm"
-
+import OrderList from "./pages/OrderList"
 
 import Login from "./components/Shop/components/Login";
 import Signup from "./components/Shop/components/Signup";
@@ -42,6 +42,11 @@ const routes = [
         path: "/cart",
         name: "cart",
         component : Cart
+    },
+    {
+        path: "/order-list", 
+        name: "OrderList",
+        component : OrderList
     },
     {
         path: "/addProductForm/new",
@@ -88,7 +93,7 @@ const router = new VueRouter (
   router.beforeEach((to, from, next) => {
     let check =
       !store.getters["auth/isAuthenticated"]() &&
-      !["/login", "/signup", "/", "/cart", "/delivery", "/delivery","/about","/contact","/orders/add","/orders","/cart/orders/add" ].includes(to.path);
+      !["/login", "/signup", "/", "/cart", "/delivery", "/delivery","/about","/contact","/orders/add","/orders","/cart/orders/add", "/order-list" ].includes(to.path);
   
     if (check) {
       // Недопускаємо до захищених роутів, якщо немає токена

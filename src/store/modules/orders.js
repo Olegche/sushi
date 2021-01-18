@@ -47,8 +47,31 @@ export default {
              })
      
          },
+         updateOrder({
+          dispatch
+        }, orderData) {
+    
+          axios
+            .put(apiEndpoints.orders.update, orderData)
+            .then(
+              //Якщо добре
+              (res) => res.data,
+            )
+            .then((resData) => {
+              console.log(`resdata  $$$ ${resData}`);
+              if (resData) dispatch('loadData')
+              else throw new Error("Fatch failed!");
+            })
+            
+    
+        },
+
+         
     },
     getters: {
-        getOrders: (state) => state.ordersList
+      getOrderStatus: (state) => state.ordersList.find((item) => !item.statusOrder ),
+
+        getOrders: (state) => state.ordersList,
+        orderId: (state) => (state.ordersList ? state.ordersList._id : null),
     },
 };
