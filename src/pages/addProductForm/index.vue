@@ -17,10 +17,24 @@
       </div>
 
       <div>
-        <label>
+        <!-- <label>
           Image
           <input type="text" v-model="img" />
-        </label>
+        </label> -->
+         <b-field class="file is-primary" :class="{'has-name': !!file}">
+        <b-upload v-model="file" class="file-label" @input="loadImage">
+            <span class="file-cta">
+                <b-icon class="file-icon" icon="upload"></b-icon>
+                <span class="file-label">Додати фото товару</span>
+            </span>
+            <span class="file-name" v-if="file">
+                {{ file.name }}
+            </span>
+        </b-upload>
+    </b-field>
+    <div v-if="img">
+       <img :src="img" alt="" width="100">
+    </div>
       </div>
 
       <div>
@@ -86,6 +100,20 @@ export default {
 
   methods: {
     ...mapActions(["addProduct", "updateProduct"]),
+
+    readFile(file) {
+        return new Promise((resolve, reject)=> {
+            let myReader = new FileReader();
+            myReader.onloadend = function (e) {
+                resolve(myReader.result);
+                reject(console.log(`err${e}`))
+            };
+            myReader.readAsDataURL(file);
+        })
+        },
+        async loadImage(file){
+            this.img= await this.readFile(file)
+        },
 
     onAdd() {
       

@@ -192,6 +192,8 @@
       >
     </div>
     <div class="acceptCard" v-if="accept">
+            <img  class="salut" src="@/assets/images/salut.gif" alt="" />
+
       <table>
         <tr>
           <th></th>
@@ -415,6 +417,7 @@ table {
   border: 2px solid rgb(206, 202, 202);
   font-size: 20px;
   padding: 1px;
+  
 }
 
 .total-order-price {
@@ -484,8 +487,15 @@ table {
   margin-left: 10%;
 }
 .acceptCard * {
-  border: 1px solid rgb(7, 7, 6);
+  
   padding: 1px;
+}
+.acceptCard th {
+  border: 2px solid rgb(206, 202, 202);
+}
+
+.acceptCard td {
+  border: 2px solid rgb(206, 202, 202);
 }
 
 .mainDivCalculator {
@@ -565,5 +575,11 @@ table {
   100% {
     opacity: 1;
   }
+}
+
+.salut{
+  margin-left: 80%;
+  position:absolute;
+  border-radius: 0px
 }
 </style>

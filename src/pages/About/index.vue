@@ -8,7 +8,7 @@
       :interval="interval"
       :pause-hover="false"
     >
-      <b-carousel-item class="is-medium" v-for="(item, i) in items" :key="i">
+      <b-carousel-item class="is-large" v-for="(item, i) in items" :key="i">
         <figure>
           <img :src="item.image" />
         </figure>
@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       arrow: true,
-      interval: 3000,
+      interval: 7000,
 
       items: [
         {
@@ -72,5 +72,10 @@ h1 {
   text-align: center;
   font-size: x-large;
   margin: 30px auto;
+}
+.carousel {
+    max-width: 1160;
+    height: 554;
+    text-align: center;
 }
 </style>

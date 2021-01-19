@@ -1,15 +1,16 @@
 <template>
   <div class="container">
     <div class="search">
-       Шукай улюблені страви за назвою:
+      Шукай улюблені страви за назвою:
+
       <input
         type="text"
         v-model="searchText"
         placeholder="philadelfia"
         class="input"
       />
-    </div>
 
+    </div>
   </div>
 </template>
 
@@ -37,9 +38,8 @@ export default {
 
   methods: {
     GoToCartBtn() {
-      this.$router.push({ name: 'cart' })
-      
-    }
+      this.$router.push({ name: "cart" });
+    },
   },
 };
 </script>
@@ -48,7 +48,6 @@ export default {
 .container {
   display: flex;
   justify-content: space-between;
-  
 }
 
 .search {
@@ -62,5 +61,4 @@ export default {
   color: darksalmon;
   border-color: darksalmon;
 }
-
 </style>

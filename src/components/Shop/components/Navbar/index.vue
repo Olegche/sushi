@@ -55,7 +55,7 @@
           
         </b-navbar-item>
       </b-navbar-dropdown>
-      <b-navbar-item>
+      <b-navbar-item v-if="isAuthenticated()">
         <b-icon v-if="userNick "
               icon="mdi mdi-account-check"
               size="is-large"
