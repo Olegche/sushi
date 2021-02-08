@@ -28,10 +28,13 @@
       <calcu />
     </div>
     <div class="container">
-      <filter-section
+      <div class="filter-section">
+<filter-section
        
         @filter-changed="setFilter"
       />
+      </div>
+      
       <product-list :products="filteredProducts" />
     </div>
   </div>
@@ -144,6 +147,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 .container {
   display: flex;
 }
@@ -156,6 +160,19 @@ export default {
 .phone {
   text-align: right;
   margin-right: 17px;
+}
+
+@media screen and (max-width: 600px) {
+  .filter-section {
+    visibility: hidden;
+    display: none;
+  }
+}
+@media screen and (max-width: 600px) {
+  .mainDivCalculator {
+    visibility: hidden;
+    display: none;
+  }
 }
 .mainDivCalculator {
   display: block;
@@ -180,18 +197,5 @@ export default {
   margin-left: 20px;
 }
 
-.mainDivCalculator {
-  display: block;
-  text-align: center;
-  width: 162px;
-  height: 100px;
-  max-width: 200px;
-  float: right;
-  border-radius: 20px;
-  padding: 9px;
-  bottom: 300px;
-  position: sticky;
-  top: 5em;
-  min-height: 30em;
-}
+
 </style>

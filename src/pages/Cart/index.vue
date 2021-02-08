@@ -1,8 +1,7 @@
 <template>
   <div>
-    <br>
+    <br />
     <div class="emptyCartShow" v-if="getMyStoreCartLength < 1">
-     
       <h1>
         В корзині пусто! <br />
         Поверніться на <a href="/">головну</a> і замовте смачні суші!
@@ -151,8 +150,6 @@
         <b-input v-model="flat" type="number" :min="1" :max="1000"></b-input>
       </b-field>
 
-     
-
       <div>
         <b-checkbox
           v-model="dontRingTheDoor"
@@ -174,10 +171,7 @@
       </div>
 
       <div>
-        <b-field
-          label="Побажання до замовлення "
-          
-        >
+        <b-field label="Побажання до замовлення ">
           <b-input v-model="wishes" maxlength="200" type="textarea"></b-input>
         </b-field>
       </div>
@@ -192,13 +186,12 @@
       >
     </div>
     <div class="acceptCard" v-if="accept">
-            <img  class="salut" src="@/assets/images/salut.gif" alt="" />
+      <img class="salut" src="@/assets/images/salut.gif" alt="" />
 
       <table>
         <tr>
           <th></th>
           <th>Замовлення прийняте !</th>
-          
         </tr>
         <tr>
           <th>Ім'я</th>
@@ -222,23 +215,27 @@
           <th>будинок</th>
           <td>{{ house }}</td>
         </tr>
-        <tr>
+        <tr v-if="entrance">
           <th>під'їзд</th>
           <td>{{ entrance }}</td>
         </tr>
-        <tr>
+        <tr v-if="flat">
           <th>кв</th>
           <td>{{ flat }}</td>
         </tr>
-        <tr>
+        <tr v-if="dontRingTheDoor">
           <th>не дзвонити в двері?</th>
-          <td>{{ dontRingTheDoor }}</td>
+          <td>
+            <b-icon icon="mdi mdi-check" type="is-success"> </b-icon>
+          </td>
         </tr>
-        <tr>
+        <tr v-if="leftAtDoor">
           <th>залишити під дверима?</th>
-          <td>{{ leftAtDoor }}</td>
+          <td>
+            <b-icon icon="mdi mdi-check" type="is-success"> </b-icon>
+          </td>
         </tr>
-        <tr>
+        <tr v-if="wishes">
           <th>кометарі</th>
           <td>
             {{ wishes }}
@@ -251,13 +248,12 @@
         </tr>
         <tr>
           <td>замовлено в</td>
-          <td>{{new Date()}}</td>
+          <td>{{ new Date().toLocaleString() }}</td>
         </tr>
-        
 
         <tr>
-          <th>всього</th>
-          <th class="total-order-price">{{ getTotalPrice }}</th>
+          <th>Всього до сплати</th>
+          <th class="total-order-price">{{ getTotalPrice }} грн.</th>
         </tr>
       </table>
     </div>
@@ -304,12 +300,15 @@ export default {
       return res;
     },
 
-    getOrderedProducts() {   
-        let products = [];
-        for (let product of this.getMyStoreCart) {
-          products.push(`назва: ${product.title} кількість: ${product.count} ціна за шт: ${product.price}` );
-        }
-        return products;
+    getOrderedProducts() {
+      let products = [];
+      for (let product of this.getMyStoreCart) {
+        products.push(
+          // product._id, можна додати айдішку продукта
+          `назва: ${product.title} кількість: ${product.count} ціна за шт: ${product.price}`
+        );
+      }
+      return products;
     },
   },
 
@@ -328,14 +327,12 @@ export default {
       leftAtDoor: false,
       wishes: "",
       accept: false,
-      
-      
     };
   },
 
   methods: {
     ...mapActions(["removeFromCart", "addToMyStoreCart", "decrementCart"]),
-    ...mapActions('orders', ["addOrder"]),
+    ...mapActions("orders", ["addOrder"]),
 
     deleteFromCart(index) {
       this.removeFromCart(index);
@@ -359,23 +356,21 @@ export default {
 
     acceptAll() {
       this.addOrder({
-       
-      userName: this.userName,
-      tel: this.tel,
-      city: this.city,
-      street: this.street,
-      house:this.house,
-      entrance: this.entrance,
-      flat: this.flat,
-      dontRingTheDoor: this.dontRingTheDoor,
-      leftAtDoor: this.leftAtDoor,
-      wishes: this.wishes,
-      date: new Date(),
-      products: this.getOrderedProducts,
-      totalPrice: this.getTotalPrice,
-      statusOrder: false
-      
-      })
+        userName: this.userName,
+        tel: this.tel,
+        city: this.city,
+        street: this.street,
+        house: this.house,
+        entrance: this.entrance,
+        flat: this.flat,
+        dontRingTheDoor: this.dontRingTheDoor,
+        leftAtDoor: this.leftAtDoor,
+        wishes: this.wishes,
+        date: new Date().toLocaleString(),
+        products: this.getOrderedProducts,
+        totalPrice: this.getTotalPrice,
+        statusOrder: false,
+      });
       this.accept = true;
       this.isOrder = false;
       this.isVisible = false;
@@ -417,7 +412,6 @@ table {
   border: 2px solid rgb(206, 202, 202);
   font-size: 20px;
   padding: 1px;
-  
 }
 
 .total-order-price {
@@ -487,7 +481,6 @@ table {
   margin-left: 10%;
 }
 .acceptCard * {
-  
   padding: 1px;
 }
 .acceptCard th {
@@ -577,9 +570,9 @@ table {
   }
 }
 
-.salut{
+.salut {
   margin-left: 80%;
-  position:absolute;
-  border-radius: 0px
+  position: absolute;
+  border-radius: 0px;
 }
 </style>

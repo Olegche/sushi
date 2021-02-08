@@ -90,6 +90,7 @@ export default {
         _id: id,
         statusOrder: true,
       });
+      this.loadData()
     },
   },
 

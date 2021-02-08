@@ -93,7 +93,7 @@ const router = new VueRouter (
   router.beforeEach((to, from, next) => {
     let check =
       !store.getters["auth/isAuthenticated"]() &&
-      !["/login", "/signup", "/", "/cart", "/delivery", "/delivery","/about","/contact","/orders/add","/orders","/cart/orders/add", "/order-list" ].includes(to.path);
+      !["/login", "/signup", "/", "/cart", "/delivery", "/delivery","/about","/contact","/orders/add","/orders","/cart/orders/add" ].includes(to.path);
   
     if (check) {
       // Недопускаємо до захищених роутів, якщо немає токена

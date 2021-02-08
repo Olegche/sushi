@@ -1,11 +1,11 @@
 <template>
     <div>
         <br>
-        <h1> Няші Контакти</h1>
+        <h1> Наші Контакти</h1>
         <hr>
         <div class="wrapper">
            <strong>
-               Зробити дзинь-дзинь <i class="fas fa-phone"></i> і замовити суші 
+               Зробити дзинь <i class="fas fa-phone"></i> і замовити суші 
                </strong> 
     <a href="tel:+380679587995"> 0679587995</a>
     <div>

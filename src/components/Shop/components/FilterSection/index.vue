@@ -152,7 +152,7 @@ export default {
   width: 300px;
   height: 450px;
   max-width: 300px;
-  background-color: rgba(241, 151, 87, 0.515);
+  background-color: rgba(248, 134, 68, 0.515);
   border-radius: 20px;
   padding: 19px;
   float: left;
@@ -162,6 +162,7 @@ export default {
   top: 5em;
   
 }
+
 .container div {
   display: block;
   margin-bottom: 20px;

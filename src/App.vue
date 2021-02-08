@@ -3,7 +3,11 @@
     <navbar />
     
     <router-view> </router-view>
-    <!-- <store/> -->
+    <!-- <div class="footer">
+      Develop and design by Cherniatiev Oleg 
+      <br>
+      for more information feel free to contact me with  <a href="mailto: develop.olegch@gmail.com ">develop.olegch@gmail.com</a>
+    </div> -->
   </div>
 </template>
 
@@ -34,5 +38,10 @@ export default {
   margin-top: 60px;
 }
 
-
+.footer{
+  max-height: 30px;
+  text-align: center;
+  margin-top: 20px;
+  bottom:0
+}
 </style>

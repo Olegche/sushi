@@ -111,7 +111,8 @@ export default {
   border-width: 0px;
   cursor: pointer;
   animation: pulse 2s infinite;
-  margin-bottom: 19px;
+  margin-bottom: 29px;
+  
 }
 .btnAdd:hover {
   animation: none;

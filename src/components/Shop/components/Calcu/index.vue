@@ -54,7 +54,7 @@
           <div class="TotalCaloriesinCart">
             Калорійність усіх товарів в корзині :{{ getTotalCalories() }}ккл
           </div>
-          <button class="btnCalculatorHide" @click="hide">x</button>
+          <button class="btnCalculatorHide" @click="show">x</button>
         </div>
       </div>
     </div>
@@ -108,9 +108,7 @@ export default {
     show() {
       this.showCalculator = !this.showCalculator;
     },
-    hide() {
-      this.showCalculator = false;
-    },
+   
     getTotalCalories() {
       if (this.getMyStoreCartLength > 0) {
         let res = [];

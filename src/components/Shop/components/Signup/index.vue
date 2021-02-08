@@ -64,7 +64,7 @@ export default {
 </script>
 <style lang="css" scoped>
 .wrapper {
-  position: absolute;
+  position: relative;
   display: block;
   text-align: center;
   margin: auto 39%;
@@ -72,6 +72,7 @@ export default {
   padding: 30px;
   box-shadow: 0 0 10px rgba(150, 126, 126, 9.5);
   border-radius: 9px;
+  z-index: 999;
 }
 
 .wrapper button {

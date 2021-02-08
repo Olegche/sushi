@@ -17,11 +17,8 @@
       </div>
 
       <div>
-        <!-- <label>
-          Image
-          <input type="text" v-model="img" />
-        </label> -->
-         <b-field class="file is-primary" :class="{'has-name': !!file}">
+       
+         <b-field class="file is-warning" :class="{'has-name': !!file}">
         <b-upload v-model="file" class="file-label" @input="loadImage">
             <span class="file-cta">
                 <b-icon class="file-icon" icon="upload"></b-icon>
@@ -99,7 +96,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["addProduct", "updateProduct"]),
+    ...mapActions(["addProduct", "updateProduct", "loadData"]),
 
     readFile(file) {
         return new Promise((resolve, reject)=> {
@@ -140,6 +137,7 @@ export default {
         );
     },
     toEdit(){
+      this.loadData()
        this.$router.push({
         name: "EditProductForm",
         
@@ -147,6 +145,7 @@ export default {
     }
   },
    mounted() {
+     
     if (this.productId) {
       const product = this.getProductById(this.productId)
       this.title = product.title
@@ -171,6 +170,7 @@ export default {
   padding: 30px;
   box-shadow: 0 0 10px rgba(150, 126, 126, 9.5);
   border-radius: 9px;
+  
 }
 .mainDiv * {
   margin: 9px auto;

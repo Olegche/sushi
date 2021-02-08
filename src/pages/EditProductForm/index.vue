@@ -1,6 +1,7 @@
 <template>
   <div>
-    <br>
+    <br />
+
     <div
       v-for="product in myProducts"
       :key="product._id"
@@ -23,13 +24,48 @@
 
       <img :src="product.img" alt="product.title" />
       <div>
-        <button class="editButton" @click="onEdit(product._id)">edit</button>
+        <button class="editButton" @click="onEdit(product._id)">Edit</button>
 
-        <button class="delButton" @click="deleteFromBase(product._id)">
+        <button
+          v-if="confirmDeleteShow"
+          class="delButton"
+          @click="deleteFromBase(product._id)"
+        >
           delete
         </button>
       </div>
     </div>
+    <div class="confirm-delete-warning">
+      <strong>
+        Якщо Вам, необхідно видалити деякі товари з бази данних, або просто
+        маєте погаганий настрій і хочите рознести вщент всі дані... Натисніть
+        червону кнопку і розважайтесь
+      </strong>
+      <br />
+
+      <b-button class="is-danger" @click="confirmDelete()">
+        Червона кнопка
+      </b-button>
+    </div>
+    <div  class="confirm-delete-warning">
+      <strong v-if="!joke" >
+        або взяти, і одразу видалити всі дані, натиснувши фіолетову кнопку...
+      </strong>
+      <br />
+      <div class="joking" v-if="joke">
+      <strong>
+        Ей!!!    Ви в адекваті? 
+        <br>
+        
+         Полегше !
+      </strong>
+       
+    </div>
+     <b-button v-if="!joke" class="is-primary" @click="joking()">
+        Фіолетова кнопка
+      </b-button>
+    </div>
+    
   </div>
 </template>
 
@@ -45,6 +81,7 @@ export default {
   data() {
     return {
       confirmDeleteShow: false,
+      joke: false,
     };
   },
 
@@ -52,18 +89,26 @@ export default {
     ...mapActions(["deleteProduct", "loadData"]),
 
     onEdit(_id) {
+      
       this.$router.push({
         name: "addProductForms",
         params: { product_id: _id },
       });
       console.log(`${_id} onEdit `);
+      
     },
 
     deleteFromBase(_id) {
-      
       this.deleteProduct(_id);
-      
+      this.loadData()
     },
+    confirmDelete() {
+      this.confirmDeleteShow = true;
+    },
+
+    joking() {
+      this.joke = true;
+    }
   },
 
   mounted() {
@@ -98,6 +143,11 @@ export default {
   cursor: pointer;
   margin: 3px;
 }
+
+.confirm-delete-warning {
+  text-align: center;
+  margin: 30px;
+}
 .editButton:hover {
   background-color: rgb(250, 227, 99);
   color: darkgreen;
@@ -106,5 +156,11 @@ export default {
 .delButton:hover {
   background-color: rgb(255, 97, 97);
   color: rgb(245, 247, 229);
+}
+.joking{
+  
+  text-align: center;
+  
+  
 }
 </style>
