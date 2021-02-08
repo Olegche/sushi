@@ -36,6 +36,7 @@ export default {
 
   methods: {
     ...mapActions("auth", ["signup", "logout"]),
+    
 
     async submit() {
       try {
@@ -45,14 +46,17 @@ export default {
           password: this.password,
         };
         const result = await this.signup(user);
-        if (result === true) {
+        
+        if (result) {
           this.message = "";
           this.$router.push({ path: "/login" });
         } else {
           this.message = result; //'SignUp error!';
+          this.$router.push({ path: "/login" });
         }
       } catch (err) {
         this.message = err.message;
+        this.$router.push({ path: "/login" });
       }
     },
   },
