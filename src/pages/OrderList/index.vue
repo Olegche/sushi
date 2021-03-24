@@ -25,7 +25,7 @@
           {{ index + 1 }}
         </td>
         <td>номер замовлення: {{ order._id }} , дата: {{ order.date }}</td>
-        <td>Ім'я: {{ order.userName }}</td>
+        <td>Ім'я: {{ order.userName }} Email: {{order.email}}</td>
         <td>Телефон: {{ order.tel }}</td>
         <td>
           вулиця: {{ order.street }}, будинок: {{ order.house }}, під'їзд:

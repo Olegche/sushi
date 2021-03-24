@@ -130,6 +130,10 @@
         </b-input>
       </b-field>
 
+      <b-field label="Email:">
+        <b-input required v-model="email" type="email"></b-input>
+      </b-field>
+
       <b-field label="* Населений пункт:">
         <b-input required v-model="city"></b-input>
       </b-field>
@@ -196,6 +200,10 @@
         <tr>
           <th>Ім'я</th>
           <td>{{ userName }}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>{{ email }}</td>
         </tr>
         <tr>
           <th>тел</th>
@@ -317,6 +325,7 @@ export default {
       isVisible: true,
       isOrder: false,
       userName: "",
+      email: "",
       tel: "",
       city: "",
       street: "",
@@ -357,6 +366,7 @@ export default {
     acceptAll() {
       this.addOrder({
         userName: this.userName,
+        email: this.email,
         tel: this.tel,
         city: this.city,
         street: this.street,
